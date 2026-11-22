@@ -320,6 +320,16 @@ body.sbc{padding-left:72px}
 .adp{display:inline-block;font:700 .7rem "Bricolage Grotesque",sans-serif;text-transform:capitalize;padding:.12rem .55rem;border-radius:99px;background:color-mix(in srgb,var(--tx) 12%,transparent);color:var(--tx)}.adp.ok{background:color-mix(in srgb,var(--ac) 22%,transparent);color:var(--ac)}.adp.warn{background:#e5393522;color:#e53935}
 .ada2{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.6rem;align-items:center}.ada2 .btn{display:inline-block;border:1px solid var(--bd);border-radius:8px;color:var(--tx);text-decoration:none;padding:.3rem .7rem;font-size:.8rem}.ada2 select{margin:0;width:auto;padding:.3rem 1.6rem .3rem .6rem;font-size:.8rem}.ada2 button.d,.ada2 button.sm.d{background:transparent;color:#e53935;border:1px solid #e5393566}
 .adrs{margin:.1rem 0;color:var(--tx);font-size:.92rem}
+.ae{max-width:680px;padding-bottom:5rem}.ae .ep-h{margin-bottom:.4rem}
+.aet{display:block;width:100%;background:none;border:0;outline:0;resize:none;overflow:hidden;color:var(--tx);font:800 1.6rem/1.25 "Bricolage Grotesque",system-ui,sans-serif;padding:.4rem 0;margin:0}.aet::placeholder,.aeb::placeholder{color:var(--mu);opacity:.7}
+.aer{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin:.4rem 0 1rem}.aer .adsg{margin:0}
+.aecv{display:block;border:1.5px dashed var(--bd);border-radius:16px;overflow:hidden;cursor:pointer;background:color-mix(in srgb,var(--tx) 4%,transparent);margin:0}.aecv #aepv{display:grid;place-items:center;min-height:150px}.aecv img{width:100%;max-height:300px;object-fit:cover;display:block}.aecv span{display:flex;flex-direction:column;align-items:center;gap:.25rem;color:var(--mu);padding:1.4rem}.aecv span b{color:var(--tx)}.aecv small{font-size:.8rem}
+.aeu{margin:.6rem 0 1rem;color:var(--mu);font-size:.88rem}.aeu summary{cursor:pointer;padding:.2rem 0}.aeu input{margin-top:.4rem}
+.aeb{display:block;width:100%;min-height:260px;background:none;border:0;outline:0;resize:none;overflow:hidden;color:var(--tx);font:400 1.05rem/1.7 "Bricolage Grotesque",system-ui,sans-serif;padding:.2rem 0;margin:0}.aec{color:var(--mu);font-size:.8rem;padding:.4rem 0 1rem;border-top:1px solid var(--bd);margin-top:.6rem}
+.ae button.d{background:transparent;color:#e53935;border:1px solid #e5393566}.aepr{min-height:200px;padding-bottom:1rem}.aepr p{line-height:1.7;margin:.8rem 0}.aepr[hidden],#aeW[hidden]{display:none}
+.aest2{display:flex;align-items:center;justify-content:space-between;gap:.6rem;flex-wrap:wrap;margin:.4rem 0 1rem}.aest2>span{font-weight:600}.aest2 .adsg{margin:0}
+.aeb2{position:sticky;bottom:calc(env(safe-area-inset-bottom,0px) + 4.6rem);display:flex;gap:.6rem;padding:.7rem 0;background:linear-gradient(transparent,var(--bg) 35%)}.aeb2 button{flex:1;border-radius:999px;padding:.8rem;font-weight:700}
+body.epf .aeb2{bottom:calc(env(safe-area-inset-bottom,0px) + .4rem)}
 .hpe{display:none}
 @media(max-width:720px){
 .ppf.pown .pf-bt{display:none}.ppf.pown .hpe{display:block;background:none;color:var(--tx);padding:.4rem;margin-right:auto}.ppf .logo{display:none}.ppf .bar{justify-content:flex-end}
@@ -512,7 +522,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="2.2";
+const APP_VERSION="2.3";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -789,8 +799,7 @@ notifs(){const m=me();if(!m)return gate();const l=db.notifs.filter(x=>x.to===m.i
 return`<div class="row"><h1 style="margin-right:auto">Notifications</h1><button class="g" onclick="readAll()">Mark all read</button></div>${l.map(n=>`<div class="card row" style="margin-bottom:.5rem;${n.read?"opacity:.6":""}"><a href="${esc(n.link)}" style="flex:1" onclick="readN('${n.id}')">${esc(n.text)}<br><span class="meta">${fd(n.date)}</span></a><button class="g sm" onclick="delN('${n.id}')">Delete</button></div>`).join("")||'<div class="empty">You are all caught up.</div>'}`},
 saved(){const m=me();if(!m)return gate();const a=db.articles.filter(x=>x.saves.includes(m.id)),d=db.discs.filter(x=>x.saves.includes(m.id));
 return`<h1>Saved content</h1><h2 id="u-art">Articles</h2><div class="grid">${a.map(aCard).join("")||'<div class="empty">No saved articles.</div>'}</div><h2 style="margin-top:1.5rem">Discussions</h2>${d.map(dCard).join("")||'<div class="empty">No saved discussions.</div>'}`},
-edit(id){if(!staff())return gate();if(id!=="new"&&!db.articles.find(x=>x.id===id))return nf();const a=db.articles.find(x=>x.id===id)||{title:"",body:"",cat:CATS[0],status:"draft"};
-return`<form class="form wide" onsubmit="return pubA(event,'${id==="new"?"":id}')"><h1>${id==="new"?"New":"Edit"} article</h1><label>Title</label><input id="t" required maxlength="140" value="${esc(a.title)}"><label>Category</label><select id="c">${CATS.map(x=>`<option ${x===a.cat?"selected":""}>${x}</option>`).join("")}</select><label>Content (blank line = new paragraph)</label><textarea id="b" rows="12" required>${esc(a.body)}</textarea><label>Cover image (optional)</label><input type="file" id="im" accept="image/*"><label>or Cover image URL (https)</label><input id="iu" type="url" placeholder="https://..."><label>Status</label><select id="st">${["draft","published","archived"].map(x=>`<option ${x===a.status?"selected":""}>${x}</option>`).join("")}</select><button>Save article</button></form>`},
+edit(id){return aePage(id)},
 settings(){if(!isAdmin())return gate();const s=S();
 const T=(k,l,t="text",x="")=>`<label>${l}</label><input id="s_${k}" type="${t}" value="${esc(s[k])}" ${x}>`;
 const X=(k,l)=>`<label class="row" style="font-weight:600;margin-bottom:.4rem"><input id="s_${k}" type="checkbox" ${s[k]?"checked":""} style="width:auto;margin:0"> ${l}</label>`;
@@ -830,7 +839,7 @@ const fl={content:ad.ct==="a"?[["all","All"],["published","Published"],["draft",
 const key=ad.t==="reports"?"rf":ad.t==="users"?"ur":"st";
 const sr=ad.t==="reports"||ad.t==="activity"?"":`<div class="adq">${I("search",18)}<input type="search" placeholder="${ad.t==="users"?"Search name or @username":ad.t==="content"?"Search by title or author":"Search"}" value="${esc(ad.q)}" oninput="adSet('q',this.value)" autocomplete="off"></div>`;
 body=`${tb}${sr}${fl?`<div class="adf">${fl.map(([v,l])=>`<button class="adc${ad[key]===v?" on":""}" onclick="adSet('${key}','${v}')">${l}</button>`).join("")}</div>`:""}<div id="adl">${adList()}</div>`}
-return`<div class="adm"><div class="adh"><h1>Admin</h1><div class="adhb"><button onclick="location.hash='#/edit/new'">${I("plus",16)} New article</button>${isAdmin()?`<button class="g" onclick="location.hash='#/settings'">${I("gear",16)} Settings</button>`:""}</div></div><div class="adts">${tabs}</div>${body}</div>`}
+return`<div class="adm"><div class="adh"><h1>Admin</h1><div class="adhb">${isAdmin()?`<button class="g" onclick="location.hash='#/settings'">${I("gear",16)} Settings</button>`:""}</div></div><div class="adts">${tabs}</div>${body}</div>`}
 function adList(){return({content:ad.ct==="a"?adArticles:adDiscs,reports:adReports,users:adUsers,activity:adLog}[ad.t]||(()=>""))()}
 function adOverview(){const D=864e5,N=Date.now(),wk=a=>a.filter(x=>(N-new Date(x.date))/D<=7).length,pb=pub(),dr=db.articles.filter(a=>a.status==="draft"),cm=db.articles.reduce((n,a)=>n+a.comments.length,0)+db.discs.reduce((n,d)=>n+d.replies.length,0),pr=adCount("r");
 const st=[["Members",db.users.length,"users","+"+wk(db.users)+" this week","users"],["Published",pb.length,"news","+"+wk(pb)+" this week","content"],["Drafts",dr.length,"news","Not live yet","content"],["Discussions",db.discs.length,"chat","+"+wk(db.discs)+" this week","content"],["Comments",cm,"chat","Articles and replies","content"],["Pending reports",pr,"flag",pr?"Needs attention":"All clear","reports"]];
@@ -853,6 +862,35 @@ function adVer(id){verify(id)}
 function adLog(){return db.log.map(l=>`<div class="adlg"><span>${esc(l.t)}</span><small>${new Date(l.d).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}</small></div>`).join("")||adEmpty("No activity yet.")}
 const adEmpty=t=>`<div class="empty">${t}</div>`;
 const adMoreBtn=(t,n)=>t>n?`<p style="text-align:center;margin:1rem 0"><button class="g" onclick="adMore()">Show more (${t-n} left)</button></p>`:"";
+
+/* ===== Article editor ===== */
+function aePage(id){if(!staff())return gate();const ex=id!=="new"?db.articles.find(x=>x.id===id):null;if(id!=="new"&&!ex)return nf();
+const a=ex||{title:"",body:"",cat:CATS[0],status:"draft",img:""};
+const sg=[["draft","Draft"],["published","Published"],["archived","Archived"]];
+return`<form class="ep ae" onsubmit="return pubA(event,'${ex?id:""}')"><div class="ep-h"><button type="button" class="ep-bk" onclick="pfBack()" aria-label="Back">${I("back",28)}</button><h1>${ex?"Edit article":"New article"}</h1></div>
+<textarea id="t" class="aet" required maxlength="140" rows="2" placeholder="Article title" oninput="aeGrow(this)" onkeydown="if(event.key==='Enter')event.preventDefault()">${esc(a.title)}</textarea>
+<div class="aer"><button type="button" class="chp on" id="aecl" onclick="aeCat()">${esc(a.cat)}</button><input type="hidden" id="c" value="${esc(a.cat)}"><div class="adsg aest" role="tablist"><button type="button" class="on" id="aew" onclick="aeTab(0)">Write</button><button type="button" id="aep" onclick="aeTab(1)">Preview</button></div></div>
+<label class="aecv" id="aecv" for="im"><div id="aepv">${a.img?`<img src="${esc(a.img)}" alt="">`:`<span>${I("img",30)}<b>Add a cover image</b><small>Tap to choose from your phone</small></span>`}</div></label>
+<input type="file" id="im" accept="image/*" hidden onchange="aeImg(this)">
+<details class="aeu"><summary>Or use an image link</summary><input id="iu" type="url" placeholder="https://..." oninput="aeUrl(this.value)"></details>
+<div id="aeW"><textarea id="b" class="aeb" required rows="12" placeholder="Write your article here. Leave a blank line between paragraphs." oninput="aeGrow(this);aeCount()">${esc(a.body)}</textarea><div class="aec" id="aec"></div></div>
+<div id="aeP" class="aepr" hidden></div>
+<div class="aest2"><span>Status</span><div class="adsg">${sg.map(([v,t])=>`<button type="button" class="${v===a.status?"on":""}" data-v="${v}" onclick="aeSt('${v}')">${t}</button>`).join("")}</div><input type="hidden" id="st" value="${esc(a.status)}"></div>
+<div class="aeb2"><button type="button" class="g" onclick="aeSave('draft')">Save draft</button><button type="button" onclick="aeSave('published')">${ex&&ex.status==="published"?"Update":"Publish"}</button></div>
+${ex?`<p style="text-align:center;margin:1rem 0"><button type="button" class="g sm d" onclick="delA('${id}')">Delete article</button></p>`:""}</form>`}
+function aeGrow(e){e.style.height="auto";e.style.height=e.scrollHeight+"px"}
+function aeCount(){const t=$("#b").value.trim(),w=t?t.split(/\s+/).length:0;$("#aec").textContent=w+" word"+(w===1?"":"s")+" · "+Math.max(1,Math.round(w/200))+" min read"}
+function aeSt(v){$("#st").value=v;document.querySelectorAll(".aest2 .adsg button").forEach(b=>b.classList.toggle("on",b.dataset.v===v))}
+function aeSave(v){aeSt(v);const f=$(".ae");if(f.reportValidity())f.requestSubmit()}
+function aeImg(el){const f=el.files[0];if(!f)return;$("#aepv").innerHTML=`<img src="${URL.createObjectURL(f)}" alt="">`;$("#iu").value=""}
+function aeUrl(v){if(/^https:\/\//.test(v.trim()))$("#aepv").innerHTML=`<img src="${esc(v.trim())}" alt="" onerror="this.remove()">`}
+function aeTab(n){$("#aeW").hidden=!!n;$("#aeP").hidden=!n;$("#aew").classList.toggle("on",!n);$("#aep").classList.toggle("on",!!n);
+if(n){const im=$("#aepv img");$("#aeP").innerHTML=`<h1>${esc($("#t").value||"Untitled")}</h1><p class="meta">${esc($("#c").value)}</p>${im?`<img class="cv" src="${esc(im.src)}" alt="">`:""}${esc($("#b").value).split(/\n\s*\n/).map(x=>x.trim()?`<p>${x.replace(/\n/g,"<br>")}</p>`:"").join("")||'<p class="meta">Nothing to preview yet.</p>'}`}}
+function aeCat(){pkClose(1);const cv=$("#c").value,e=document.createElement("div");e.id="pk";e.className="cxs";e.onclick=ev=>{if(ev.target===e)pkClose()};
+e.innerHTML=`<div class="cxb" role="dialog" aria-modal="true" aria-label="Category"><div class="cxg"></div><div class="cxh"><b>Category</b><button type="button" onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><div class="cxl pkl">${CATS.map((x,i)=>`<button type="button" class="pko${x===cv?" on":""}" onclick="aeSetCat(${i})"><span>${esc(x)}</span><i></i></button>`).join("")}</div></div>`;
+document.body.appendChild(e);document.body.style.overflow="hidden"}
+function aeSetCat(i){$("#c").value=CATS[i];$("#aecl").textContent=CATS[i];pkClose(1)}
+function aeInit(){document.querySelectorAll(".ae textarea").forEach(aeGrow);if($("#aec"))aeCount()}
 const kf=n=>{const f=(v,x)=>{const r=Math.floor(v*10)/10;return(r%1?r.toFixed(1):String(r))+x};return n>=1e6?f(n/1e6,"M"):n>=1e3?f(n/1e3,"K"):n};
 function pfSort(o){pf.o=o;rerender()}
 function sbToggle(){if(document.body.classList.contains("sbm"))return;const c=document.body.classList.toggle("sbc");try{localStorage.setItem(K+"sb",c?"1":"")}catch(e){}sbar()}
@@ -896,9 +934,9 @@ function gate(){return`<div class="empty"><h2>Please log in</h2><p>You need an a
 function nf(){return`<div class="empty"><h2>Not found</h2><a class="btn" href="#/">Go home</a></div>`}
 function route(){const [p,qs]=(location.hash||"#/").slice(2).split("?"),[n,id]=p.split("/"),q=new URLSearchParams(qs||"");
 if(n!=="search"&&n!=="people")sq.v="";
-document.body.classList.toggle("fm",!n||n==="home"||n==="following");document.body.classList.toggle("ppf",n==="profile");document.body.classList.toggle("epf",n==="editprofile"||n==="findpeople"||n==="viewers");
+document.body.classList.toggle("fm",!n||n==="home"||n==="following");document.body.classList.toggle("ppf",n==="profile");document.body.classList.toggle("epf",n==="editprofile"||n==="findpeople"||n==="viewers"||n==="edit");
 if(S().maint&&!staff()&&n!=="login"){$("#app").innerHTML=`<div class="empty"><h2>We will be back soon</h2><p>${esc(S().name)} is under maintenance.</p><a class="btn" href="#/login">Staff login</a></div>`;chrome();return}
-let f=R[n||"home"];try{$("#app").innerHTML=f?f(["articles","community","explore"].includes(n)?q:id):nf()}catch(e){$("#app").innerHTML=`<div class="empty">Something went wrong: ${esc(e.message)}</div>`}
+let f=R[n||"home"];try{$("#app").innerHTML=f?f(["articles","community","explore"].includes(n)?q:id):nf();if(n==="edit")aeInit()}catch(e){$("#app").innerHTML=`<div class="empty">Something went wrong: ${esc(e.message)}</div>`}
 chrome();menu(0);scrollTo(0,0);countUp();if(n==="search")setTimeout(()=>{const i=$("#sqi");i&&i.focus()},0);const ms=$("#ms");if(ms)ms.scrollTop=ms.scrollHeight;splashDone()}
 let fbo={};
 function fbar(ph,s,c,o,opts){fbo={c:[["","All"],...CATS.map(x=>[x,x])],o:opts,t:{c:"Category",o:"Sort by"}};const ol=(opts.find(x=>x[0]===o)||opts[0])[1];
