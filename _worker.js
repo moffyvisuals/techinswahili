@@ -2,7 +2,7 @@
 // a proper preview card (title, text, cover image) for WhatsApp, X, Facebook and Telegram.
 // Everything else is served normally. If anything fails, the normal site is served.
 const ESC = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
-const strip = t => String(t || "").replace(/```[\s\S]*?```/g, " ").replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[#>*`_]/g, "").replace(/\s+/g, " ").trim();
+const strip = t => String(t || "").replace(/\{c:#[0-9a-fA-F]{3,6}\|([^}]*)\}/g, "$1").replace(/```[\s\S]*?```/g, " ").replace(/!\[[^\]]*\]\([^)]*\)/g, "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[#>*`_]/g, "").replace(/\s+/g, " ").trim();
 
 export default {
   async fetch(request, env) {
