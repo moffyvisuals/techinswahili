@@ -163,7 +163,7 @@ footer{text-align:center;color:var(--mu);font:.85rem "Bricolage Grotesque",sans-
 .fw{position:relative;max-width:440px;margin:0 auto;height:calc(100dvh - 140px);min-height:480px;border-radius:16px;overflow:hidden;background:#000;color:#fff}
 .feed{height:100%;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}.feed::-webkit-scrollbar{display:none}
 .fs{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden;background:#000}
-.fbg{position:absolute;inset:0}.fbg>svg,.fbg>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fbg{position:absolute;inset:0}.fbg>img.fbb{object-fit:cover;filter:blur(26px) brightness(.55);transform:scale(1.15)}.fbg>img.fff{object-fit:contain}.fbg>svg,.fbg>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fs:after{content:"";position:absolute;inset:38% 0 0;background:linear-gradient(transparent,#000d);pointer-events:none}
 .fs:before{content:"";position:absolute;inset:0 0 auto;height:120px;background:linear-gradient(#000a,transparent);z-index:1;pointer-events:none}
 .fi{position:absolute;left:0;right:76px;bottom:0;padding:0 .9rem 1.1rem;z-index:2;font-family:"Bricolage Grotesque",system-ui,sans-serif;text-shadow:0 1px 4px #0008}
@@ -412,8 +412,7 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 #ins img{width:48px;height:48px;border-radius:12px;flex:none}#ins .t{flex:1;min-width:0}#ins b{display:block}#ins span.im{color:var(--mu);font-size:.85rem;line-height:1.3;display:block}
 #ins .x{background:none;color:var(--mu);padding:.4rem .6rem}
 #spl{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);color:var(--tx);align-items:center;justify-content:center;flex-direction:column;gap:1.1rem;transition:opacity .2s ease}
-@media(display-mode:standalone){#spl{display:flex}}
-.nosp #spl{display:none!important}
+#spl{display:none!important}
 #spl.out{opacity:0;transform:scale(1.05);pointer-events:none}
 #spl .slw{width:116px;height:116px;display:flex;align-items:center;justify-content:center}
 #spl .sl{width:116px;height:116px;object-fit:contain;animation:spl-pulse 2.2s ease-in-out infinite}
@@ -691,7 +690,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.25";
+const APP_VERSION="5.1.27";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -976,7 +975,7 @@ if(fv==="fy"){const tp=lsGet("tis-topics",[]),sc=i=>{const x=i.x,n=x.likes.lengt
 return l.sort((p,q)=>q.x.date.localeCompare(p.x.date)).slice(0,N||40)}
 function fslide(i){const A=i.k==="a",x=i.x,uid=A?x.author:x.uid,u=U(uid),m=me(),on=m&&x.likes.includes(m.id),sv=m&&x.saves.includes(m.id),n=A?x.comments.length:x.replies.length,
 fo=m&&(u.followers||[]).includes(m.id),canF=uid!=="seed"&&(!m||m.id!==uid)&&!fo,href="#/"+(A?"article/":"disc/")+x.id,body=A?mdText(x.body).slice(0,400):x.body;
-return`<section class="fs"><div class="fc"><div class="fbg" onclick="ftap(event,'${i.k}','${x.id}')">${art(x.cat)}${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</div>
+return`<section class="fs"><div class="fc"><div class="fbg" onclick="ftap(event,'${i.k}','${x.id}')">${art(x.cat)}${x.img?`<img class="fbb" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()"><img class="fff" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</div>
 <div class="fi"><div class="fu">${ulink(uid,"@"+esc(u.user))}${vb(u)}<span class="meta">· ${ago(x.date)}</span></div><a href="${href}"><div class="ft">${esc(x.title)}</div><div class="fb2">${esc(body.slice(0,140))}${body.length>140?"… <b>more</b>":""}</div></a>${catTag(x.cat)}</div></div>
 <div class="rail"><div class="ra">${ulink(uid,av(uid,48))}${canF?`<button class="fp" onclick="follow('${uid}')" aria-label="Follow">+</button>`:""}</div>
 <button class="rb ${on?"on":""}${on&&pk2===x.id?" pop":""}" onclick="${A?"likeA":"likeD"}('${x.id}')" aria-label="Like">${I("heart",34)}<span>${x.likes.length}</span></button>
@@ -1480,7 +1479,7 @@ addEventListener("touchcancel",()=>{on=0;rst()},{passive:true});
 /* tapping Home does the same as pull to refresh */
 const hp=()=>{const n=(location.hash||"#/").slice(2).split("?")[0].split("/")[0];return!n||n==="home"};
 document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("#bt a");if(!a||a.getAttribute("href")!=="#/"||busy||cs)return;
-if(hp()){e.preventDefault();const f=feed();if(f)f.scrollTop=0;scrollTo(0,0);run()}else setTimeout(()=>{if(hp()&&!busy)run()},80)});
+if(hp()){e.preventDefault();const f=feed();if(f)f.scrollTop=0;scrollTo(0,0);run()}});
 })();
 
 /* swipe to dismiss: comments sheet (pull down) and menu drawer (swipe right) */
