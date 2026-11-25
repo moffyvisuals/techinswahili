@@ -2,7 +2,7 @@
 <html lang="sw">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tech In Swahili</title>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#000000">
@@ -376,7 +376,7 @@ body.epf .aeb2{bottom:calc(env(safe-area-inset-bottom,0px) + .4rem)}
 .aub{width:100%;border-radius:14px;padding:.95rem;font-size:1rem;font-weight:700;margin-top:.3rem}.aus{text-align:center;color:var(--mu);margin:.4rem 0 0}.aus a{color:var(--ac);font-weight:700}.aufg{align-self:flex-end;color:var(--ac);font-size:.9rem;font-weight:600;margin-top:-.2rem}
 .aerr{color:var(--er);text-align:center;margin:0;min-height:0;font-size:.9rem}.aerr:empty{display:none}.auhint{margin:-.3rem 0 0;color:var(--mu);font-size:.8rem}.aut{display:flex;align-items:flex-start;gap:.6rem;color:var(--mu);font-size:.88rem;margin:0}.aut input{width:auto;margin:.15rem 0 0;accent-color:var(--ac)}
 .insft{text-align:center;opacity:.5;font-size:.78rem;padding:1.2rem 1.5rem 2rem;margin:0}
-.abody{font-size:var(--afs,1rem);line-height:1.75}.abody h2,.abody h3,.abody h4{margin:1.6rem 0 .5rem;line-height:1.25}.abody p{margin:.9rem 0}.abody ul,.abody ol{padding-left:1.4rem;margin:.9rem 0}.abody li{margin:.3rem 0}.abody a,.mn{color:var(--ac);font-weight:600}.abody code{background:color-mix(in srgb,var(--tx) 12%,transparent);padding:.1rem .35rem;border-radius:6px;font-size:.9em}.abody pre{background:color-mix(in srgb,var(--tx) 8%,transparent);border:1px solid var(--bd);border-radius:12px;padding:1rem;overflow-x:auto}.abody pre code{background:none;padding:0}.abody blockquote{margin:1rem 0;padding:.2rem 1rem;border-left:3px solid var(--ac);color:var(--mu)}.abody img{max-width:100%;border-radius:12px;margin:.8rem 0}
+.abody{font-size:calc(var(--afs,1rem)*var(--az,1));line-height:1.75}.abody h2,.abody h3,.abody h4{margin:1.6rem 0 .5rem;line-height:1.25}.abody p{margin:.9rem 0}.abody ul,.abody ol{padding-left:1.4rem;margin:.9rem 0}.abody li{margin:.3rem 0}.abody a,.mn{color:var(--ac);font-weight:600}.abody code{background:color-mix(in srgb,var(--tx) 12%,transparent);padding:.1rem .35rem;border-radius:6px;font-size:.9em}.abody pre{background:color-mix(in srgb,var(--tx) 8%,transparent);border:1px solid var(--bd);border-radius:12px;padding:1rem;overflow-x:auto}.abody pre code{background:none;padding:0}.abody blockquote{margin:1rem 0;padding:.2rem 1rem;border-left:3px solid var(--ac);color:var(--mu)}.abody img{max-width:100%;border-radius:12px;margin:.8rem 0}
 .aetb{display:flex;gap:.3rem;overflow-x:auto;scrollbar-width:none;margin:.2rem 0 .5rem;padding-bottom:.2rem}.aetb button{flex:none;min-width:40px;height:38px;border-radius:10px;background:color-mix(in srgb,var(--tx) 8%,transparent);color:var(--tx);padding:0 .7rem;font-weight:700;display:grid;place-items:center}
 #aerd{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;background:color-mix(in srgb,var(--ac) 14%,transparent);border:1px solid var(--ac);border-radius:12px;padding:.6rem .8rem;margin-bottom:.8rem;font-size:.9rem}#aerd[hidden]{display:none}#aerd span{flex:1}
 #rpb{position:fixed;top:0;left:0;height:3px;background:var(--ac);z-index:70;width:0;transition:width .1s}
@@ -511,6 +511,9 @@ body.cmo .fs .fi,body.cmo .fs .rail,body.cmo .ftabs{opacity:0;pointer-events:non
 .ab2{margin:.1rem 0 1rem;gap:.4rem;justify-content:flex-start;flex-wrap:wrap}
 .ab2 .g{flex:0 0 auto;min-width:0;height:34px;padding:0 .85rem;border:0;border-radius:99px;font-size:.8rem;background:color-mix(in srgb,var(--tx) 6%,transparent)}
 .ab2 .g.d{color:#e5484d}
+
+/* no pinch / double-tap zoom on mobile */
+html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 </style>
 </head>
 <body>
@@ -644,7 +647,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.16";
+const APP_VERSION="5.1.18";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1411,6 +1414,7 @@ addEventListener("touchmove",e=>{if(!on)return;dy=e.touches[0].clientY-y0;if(dy>
 addEventListener("touchend",async()=>{if(!on)return;on=0;if(dy*.55<T){rst();return}
 busy=1;pe.style.transition="transform .2s";pe.style.transform="translateY("+(T/2)+"px)";pe.classList.add("go");
 if(["","home"].includes((location.hash||"#/").slice(2).split("?")[0].split("/")[0]))SHK=new Map;
+document.documentElement.style.removeProperty("--az");
 if(document.body.classList.contains("fm")&&!cs)route();
 const s0=dsig();loadAll().catch(()=>{}).then(()=>{if(dsig()!==s0&&document.body.classList.contains("fm")&&!cs)try{rerender()}catch(e){}});
 await new Promise(r=>setTimeout(r,350));rst();busy=0},{passive:true});
@@ -1474,6 +1478,22 @@ addEventListener("touchcancel",end,{passive:true});
 })();
 
 boot();
+</script>
+<script>
+/* iOS Safari ignores user-scalable=no: block pinch gestures explicitly */
+["gesturestart","gesturechange","gestureend"].forEach(t=>document.addEventListener(t,e=>e.preventDefault()));
+document.addEventListener("touchmove",e=>{if(e.touches&&e.touches.length>1&&e.cancelable)e.preventDefault()},{passive:false});
+
+/* pinch-zoom only on article text: scales the text itself, resets on refresh / page change */
+(function(){const R=document.documentElement;let d0=0,z0=1,on=0;
+const dist=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);
+const cur=()=>parseFloat(R.style.getPropertyValue("--az"))||1;
+document.addEventListener("touchstart",e=>{on=0;if(e.touches.length===2&&e.target.closest&&e.target.closest(".abody")&&e.touches[1].target.closest&&e.touches[1].target.closest(".abody")){on=1;d0=dist(e.touches);z0=cur()}},{passive:true});
+document.addEventListener("touchmove",e=>{if(!on||e.touches.length!==2)return;const z=Math.min(2.5,Math.max(.8,z0*dist(e.touches)/d0));R.style.setProperty("--az",z.toFixed(3))},{passive:true});
+document.addEventListener("touchend",e=>{if(e.touches.length<2)on=0},{passive:true});
+addEventListener("hashchange",()=>R.style.removeProperty("--az"));
+addEventListener("pageshow",()=>R.style.removeProperty("--az"));
+})();
 </script>
 </body>
 </html>
