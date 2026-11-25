@@ -411,8 +411,9 @@ button:focus:not(:focus-visible),a:focus:not(:focus-visible){outline:none}
 #ins{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:60;max-width:460px;margin:0 auto;background:var(--sf);color:var(--tx);border:1px solid var(--bd);border-radius:16px;padding:.9rem 1rem;box-shadow:0 10px 40px #0009;display:flex;align-items:center;gap:.8rem;font-family:"Bricolage Grotesque",system-ui,sans-serif;animation:up .35s cubic-bezier(.2,.8,.2,1)}
 #ins img{width:48px;height:48px;border-radius:12px;flex:none}#ins .t{flex:1;min-width:0}#ins b{display:block}#ins span.im{color:var(--mu);font-size:.85rem;line-height:1.3;display:block}
 #ins .x{background:none;color:var(--mu);padding:.4rem .6rem}
-#spl{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);color:var(--tx);align-items:center;justify-content:center;flex-direction:column;gap:1.1rem;transition:opacity .35s ease,transform .35s ease}
+#spl{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);color:var(--tx);align-items:center;justify-content:center;flex-direction:column;gap:1.1rem;transition:opacity .2s ease}
 @media(display-mode:standalone){#spl{display:flex}}
+.nosp #spl{display:none!important}
 #spl.out{opacity:0;transform:scale(1.05);pointer-events:none}
 #spl .slw{width:116px;height:116px;display:flex;align-items:center;justify-content:center}
 #spl .sl{width:116px;height:116px;object-fit:contain;animation:spl-pulse 2.2s ease-in-out infinite}
@@ -538,6 +539,7 @@ html,body{touch-action:pan-x pan-y;-webkit-text-size-adjust:100%;text-size-adjus
 </style>
 </head>
 <body>
+<script>if(/^#\/(article|disc)\//.test(location.hash))document.documentElement.classList.add("nosp")</script>
 <div id="spl" aria-hidden="true"><div class="slw"><img class="sl" alt="" src="icon-192.png" style="border-radius:26px"></div><div class="sn">Tech In Swahili</div><div class="sb2"></div></div>
 <header><div class="bar"><button class="hb hbk" onclick="pfBack()" aria-label="Back"></button><button class="hb hbl" onclick="location.hash='#/notifs'" aria-label="Notifications"></button><button class="hb hsh" onclick="share()" aria-label="Share profile"></button><button id="hpe" class="hpe" onclick="pfEd()" aria-label="Edit profile"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.500 6.500 4 4"/></svg></button><button class="hb hvw" onclick="location.hash='#/viewers'" aria-label="Profile views"></button><button class="hb hfp" onclick="location.hash='#/findpeople'" aria-label="Find people"></button><a class="logo" href="#/"><img class="lg" width="44" height="44" alt="" src="data:,"><span id="sn">Tech In <b>Swahili</b></span></a><nav id="nav"></nav><form class="sp" onsubmit="return hs(event)" role="search"><input id="hq" placeholder="Search" aria-label="Search" autocomplete="off"><button aria-label="Search"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button></form><div class="row" id="acct"></div><a class="mi" href="#/search" aria-label="Find people"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></a><a id="mi" class="mi" href="#/inbox" aria-label="Inbox"></a><button id="mb" class="mb" aria-label="Menu" aria-expanded="false" onclick="menu()"><i></i><i></i><i></i></button></div><div id="mp" class="mp" onclick="menu(0)"></div><div id="mbg" class="mbg" onclick="menu(0)"></div></header>
 <aside id="sb" class="sb" aria-label="Sidebar"></aside>
@@ -610,7 +612,7 @@ e.textContent=`:root:root:root{--ac:${c};--on:${on};--r:${s.radius}px;--gd:color
 try{if(!localStorage.getItem(K+"t")&&s.theme!=="auto")document.documentElement.dataset.theme=s.theme}catch(x){}logoTint()}let db,cur=null;
 const now=()=>new Date().toISOString(),uid=()=>Math.random().toString(36).slice(2,10);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-const fd=d=>new Date(d).toLocaleDateString("sw-TZ",{day:"numeric",month:"short",year:"numeric"});
+let FDF;const fd=d=>{const x=new Date(d);try{return(FDF||(FDF=new Intl.DateTimeFormat("sw-TZ",{day:"numeric",month:"short",year:"numeric"}))).format(x)}catch(e){return x.toLocaleDateString("sw-TZ",{day:"numeric",month:"short",year:"numeric"})}};
 const $=s=>document.querySelector(s);
 /* Your Supabase URL and key now live in config.js */
 const SUPABASE_URL=(window.TIS_CONFIG||{}).url||"",SUPABASE_KEY=(window.TIS_CONFIG||{}).key||"";
@@ -689,7 +691,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.24";
+const APP_VERSION="5.1.25";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -896,7 +898,7 @@ function nav(){const a=$("#app");a.classList.remove("pg");void a.offsetWidth;a.c
 if(Date.now()-loaded>20000&&!bgBusy){bgBusy=1;const s0=dsig();loadAll().then(()=>{bgBusy=0;const n=(location.hash||"#/").slice(2).split("?")[0].split("/")[0];if(dsig()!==s0&&!cs&&["","home","following","articles","community","article","disc"].includes(n))try{rerender()}catch(e){}}).catch(()=>{bgBusy=0;loaded=Date.now()-10000})}}
 let spT0=Date.now(),spDone=0;
 function splashOn(){const e=$("#spl");if(!e)return;if(S().logo)e.querySelector(".slw").innerHTML='<img class="sl lg" alt="" src="'+esc(L())+'">';e.querySelector(".sn").textContent=S().name;logoApply();setTimeout(splashDone,4500)}
-function splashDone(){if(spDone)return;const e=$("#spl");if(!e)return;spDone=1;setTimeout(()=>{e.classList.add("out");setTimeout(()=>e.remove(),420)},Math.max(0,150-(Date.now()-spT0)))}
+function splashDone(){if(spDone)return;const e=$("#spl");if(!e)return;spDone=1;setTimeout(()=>{e.classList.add("out");setTimeout(()=>e.remove(),230)},Math.max(0,150-(Date.now()-spT0)))}
 const deepLink=()=>{const h=(location.hash||"#/").slice(2).split("?")[0].split("/"),n=h[0],id=h[1]||"";return(n==="article"&&id)?{k:"a",id}:(n==="disc"&&id)?{k:"d",id}:(!n||n==="home"||n==="following")?{k:"h",id:""}:null};
 const bgRefresh=()=>{PEND=1;loadAll().catch(()=>{}).then(()=>{PEND=0;const a=document.activeElement;if(!cs&&!/auf|epf/.test(document.body.className)&&!(a&&a.matches&&a.matches("input,textarea")))try{rerender()}catch(e){}})};
 /* first visit (no cache): fetch only what the opened page needs, paint, then load everything else in the background */
