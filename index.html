@@ -1433,14 +1433,18 @@ const pos=d=>{const t=Math.min(d,T*1.4);pe.style.transition="none";pe.style.opac
 const rst=()=>{pe.style.transition="transform .25s,opacity .25s";pe.style.opacity=0;pe.style.transform="translateY(-50px)";pe.classList.remove("go")};
 addEventListener("touchstart",e=>{on=0;dy=0;if(busy||!document.body.classList.contains("fm")||cs||e.touches.length!==1||!top())return;y0=e.touches[0].clientY;on=1},{passive:true});
 addEventListener("touchmove",e=>{if(!on)return;dy=e.touches[0].clientY-y0;if(dy>0&&top()){if(e.cancelable)e.preventDefault();pos(dy*.55)}else if(dy<=0){on=0;rst()}},{passive:false});
-addEventListener("touchend",async()=>{if(!on)return;on=0;if(dy*.55<T){rst();return}
-busy=1;pe.style.transition="transform .2s";pe.style.transform="translateY("+(T/2)+"px)";pe.classList.add("go");try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
+const run=async()=>{busy=1;pe.style.opacity=1;pe.style.transition="transform .2s";pe.style.transform="translateY("+(T/2)+"px)";pe.classList.add("go");try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
 if(["","home"].includes((location.hash||"#/").slice(2).split("?")[0].split("/")[0]))SHK=new Map;
 document.documentElement.style.removeProperty("--az");
 if(document.body.classList.contains("fm")&&!cs)route();
 const s0=dsig();loadAll().catch(()=>{}).then(()=>{if(dsig()!==s0&&document.body.classList.contains("fm")&&!cs)try{rerender()}catch(e){}});
-await new Promise(r=>setTimeout(r,350));rst();busy=0},{passive:true});
+await new Promise(r=>setTimeout(r,350));rst();busy=0};
+addEventListener("touchend",()=>{if(!on)return;on=0;if(dy*.55<T){rst();return}run()},{passive:true});
 addEventListener("touchcancel",()=>{on=0;rst()},{passive:true});
+/* tapping Home does the same as pull to refresh */
+const hp=()=>{const n=(location.hash||"#/").slice(2).split("?")[0].split("/")[0];return!n||n==="home"};
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("#bt a");if(!a||a.getAttribute("href")!=="#/"||busy||cs)return;
+if(hp()){e.preventDefault();const f=feed();if(f)f.scrollTop=0;scrollTo(0,0);run()}else setTimeout(()=>{if(hp()&&!busy)run()},80)});
 })();
 
 /* swipe to dismiss: comments sheet (pull down) and menu drawer (swipe right) */
