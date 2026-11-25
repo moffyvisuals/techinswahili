@@ -12,6 +12,12 @@ export default {
       const m = im || url.pathname.match(/^\/([ad])\/([0-9a-fA-F-]{8,40})\/?$/);
       if (!m) return env.ASSETS.fetch(request);
       const kind = m[1], id = m[2];
+      // Real people (browsers) don't need the preview card: send them straight to the app
+      // without waiting on a database round trip. Link-preview bots (WhatsApp, Facebook, X,
+      // Telegram...) don't send browser navigation headers, so they still get the full card.
+      const ua = request.headers.get("user-agent") || "";
+      const human = request.headers.get("sec-fetch-dest") === "document" && request.headers.get("sec-fetch-mode") === "navigate" && !/bot|crawl|spider|facebookexternalhit|whatsapp|telegram|twitter|slack|discord|linkedin|preview|embed/i.test(ua);
+      if (human && !im && !url.searchParams.get("debug")) return Response.redirect(url.origin + `/#/${kind === "a" ? "article" : "disc"}/${id}`, 302);
       const cfg = await (await env.ASSETS.fetch(new URL("/config.js", url))).text();
       const base = (cfg.match(/url:\s*"([^"]+)"/) || [])[1], key = (cfg.match(/key:\s*"([^"]+)"/) || [])[1];
       if (!base || !key) return env.ASSETS.fetch(request);

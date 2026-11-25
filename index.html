@@ -14,7 +14,9 @@
 <meta name="apple-mobile-web-app-title" content="Tech In Swahili">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:wght@400;600&display=swap">
+<link rel="preconnect" href="https://lghjzpwsjrmckpjqtbzk.supabase.co" crossorigin><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js">
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:wght@400;600&display=swap"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Source+Serif+4:wght@400;600&display=swap"></noscript>
 <style>
 :root{--bg:#fff;--sf:#fff;--tx:#161823;--mu:#75767d;--bd:#e3e3e4;--ac:#6abd45;--ac2:#8fd16b;--gd:#3b7d23;--nv:#333333;--on:#14210d;--ok:#12a150;--er:#d93025;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -101,7 +103,7 @@ main{padding-bottom:6rem}#toast{bottom:4.8rem!important}}
 .lkb svg.lkh{display:block;margin:1.6rem auto 1rem}.lkb h3{margin:0 0 .6rem;font-size:1.05rem}.lkb p{margin:0 1.4rem 1.4rem;color:var(--mu);font-size:.95rem;line-height:1.45}.lkb p b{color:var(--tx);font-weight:600}
 .lkb button{display:block;width:100%;border:0;border-top:1px solid var(--bd);background:none;color:var(--tx);font:inherit;font-weight:700;padding:.95rem;cursor:pointer}.lkb button:active{background:var(--bd)}
 .cxs{position:fixed;left:0;right:0;top:var(--vvt,0px);height:var(--vvh,100%);z-index:40;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center;animation:fi .2s}.cxs.out{opacity:0;transition:opacity .2s}.cxs.out .cxb{transform:translateY(100%);transition:transform .2s}
-.cxb{background:var(--sf);width:min(100%,560px);height:min(74vh,calc(var(--vvh,100vh) - 56px));border-radius:16px 16px 0 0;display:flex;flex-direction:column;animation:up .3s cubic-bezier(.2,.8,.2,1)}.cxl{overscroll-behavior:contain}.cxb{touch-action:pan-y}.cxg{width:36px;height:4px;border-radius:99px;background:var(--bd);margin:8px auto 0}
+.cxb{background:var(--sf);width:min(100%,560px);height:min(74vh,calc(var(--vvh,100vh) - 56px));border-radius:16px 16px 0 0;display:flex;flex-direction:column;animation:up .3s cubic-bezier(.2,.8,.2,1)}html,body{overscroll-behavior-y:contain}.cxl{overscroll-behavior:contain}.cxb{touch-action:pan-y}.cxg{width:36px;height:4px;border-radius:99px;background:var(--bd);margin:8px auto 0}
 .cxh{position:relative;display:flex;justify-content:center;padding:.7rem 3rem;border-bottom:1px solid var(--bd)}.cxh b{font:700 .95rem "Bricolage Grotesque",system-ui,sans-serif}.cxh button{position:absolute;right:.6rem;top:.4rem;background:none;color:var(--tx);padding:.4rem}
 .cxl{flex:1;min-height:0;overflow:auto;padding:.4rem 1rem;font-family:"Bricolage Grotesque",system-ui,sans-serif}.cxi{display:flex;gap:.7rem;padding:.65rem 0;align-items:flex-start}.cxd{flex:1;min-width:0}.cxu{color:var(--mu);font:600 .82rem "Bricolage Grotesque",system-ui,sans-serif}.cxt{font:400 .95rem/1.4 "Bricolage Grotesque",system-ui,sans-serif;word-break:break-word;margin-top:.1rem}
 .cxm{display:flex;gap:1rem;color:var(--mu);font-size:.8rem;margin-top:.3rem}.cxm button,.cxv,.cxr button{background:none;color:var(--mu);padding:0;border-radius:0;font:600 .8rem "Bricolage Grotesque",system-ui,sans-serif}.cxv{display:block;padding:.5rem 0}.cxv:before{content:"";display:inline-block;width:22px;height:1px;background:var(--mu);vertical-align:middle;margin-right:.5rem}
@@ -560,6 +562,11 @@ return o+'<div class="sk-row" style="justify-content:space-between"><i class="sh
 if(h==="profile"){
 var g='';for(var k=0;k<9;k++)g+='<i class="sh"></i>';
 return o+'<div class="sk-row" style="justify-content:space-between;align-items:flex-start"><div style="flex:1">'+L(60,"height:26px")+L(36,"height:12px")+'<div class="sk-row" style="gap:1.4rem;margin-top:1rem">'+L(14,"height:30px")+L(14,"height:30px")+L(14,"height:30px")+'</div></div>'+C(104)+'</div><div class="sk-row" style="margin-top:1rem"><i class="sh sk-l" style="flex:1;height:44px;border-radius:12px;margin:0"></i><i class="sh sk-l" style="flex:1;height:44px;border-radius:12px;margin:0"></i></div><div class="sk-tg">'+g+'</div></div>'}
+if(h==="article"||h==="a"){
+var bl='';[96,100,88,100,72].forEach(function(w){bl+=L(w,"height:14px;margin:.7rem 0")});bl+='<div style="height:.6rem"></div>';[100,94,100,60].forEach(function(w){bl+=L(w,"height:14px;margin:.7rem 0")});
+return o+'<div class="sh sk-l" style="height:260px;border-radius:12px;margin:0 0 1rem"></div>'+L(32,"height:24px;border-radius:999px;margin:.2rem 0 .9rem")+L(92,"height:30px;margin:.5rem 0")+L(64,"height:30px;margin:.5rem 0 1rem")+'<div class="sk-row" style="justify-content:space-between;margin-bottom:1.2rem"><div class="sk-row">'+C(42)+'<div style="width:130px">'+L(80,"height:13px;margin:.2rem 0")+L(55,"height:10px;margin:.4rem 0")+'</div></div><div class="sk-row" style="gap:.5rem"><i class="sh sk-l" style="width:84px;height:28px;border-radius:999px;margin:0"></i><i class="sh sk-l" style="width:52px;height:28px;border-radius:999px;margin:0"></i></div></div>'+bl+'</div>'}
+if(h==="disc"||h==="d"){
+return o+'<div class="sk-row" style="margin:.4rem 0 1rem">'+C(42)+'<div style="flex:1">'+L(40,"height:13px;margin:.2rem 0")+L(26,"height:10px;margin:.4rem 0")+'</div></div>'+L(90,"height:24px")+L(62,"height:24px;margin-bottom:1rem")+L(100,"height:14px;margin:.7rem 0")+L(94,"height:14px;margin:.7rem 0")+L(100,"height:14px;margin:.7rem 0")+L(58,"height:14px;margin:.7rem 0")+'<div class="sk-row" style="margin-top:1rem"><i class="sh sk-l" style="width:64px;height:32px;border-radius:999px;margin:0"></i><i class="sh sk-l" style="width:64px;height:32px;border-radius:999px;margin:0"></i><i class="sh sk-l" style="width:64px;height:32px;border-radius:999px;margin:0"></i></div></div>'}
 return o+L(40,"height:28px")+L(100,"height:120px;border-radius:14px;margin-top:1rem")+L(92)+L(80)+L(60)+'</div>'};
 </script>
 <script>document.getElementById("app").innerHTML=SKEL();</script>
@@ -821,10 +828,12 @@ const RD=(()=>{try{return new Set(JSON.parse(localStorage.getItem("tis-read")||"
 const rdSave=()=>{try{localStorage.setItem("tis-read",JSON.stringify([...RD].slice(-600)))}catch(e){}};
 const mapN=n=>({id:n.id,to:n.user_id,text:n.text,link:n.link,read:(+n.read||RD.has(n.id))?1:0,date:n.created_at});
 const mapM=m=>({id:m.id,from:m.from_id,to:m.to_id,text:m.text,date:m.created_at,read:+m.read});
-async function loadAll(){
+async function loadAll(Q){
 const t=n=>sb.from(n).select("*"),none={data:[]};
+const lt=(n,k)=>sb.from(n).select("*").order("created_at",{ascending:false}).limit(k),one=(n,id)=>sb.from(n).select("*").eq("id",id),
+mix=(a,b)=>Promise.all([a,b]).then(([x,y])=>{const xs=x.data||[];return{data:xs.concat((y.data||[]).filter(r=>!xs.some(z=>z.id===r.id))),error:x.error||y.error}});
 const pg=async(n,o,mx)=>{const P=1000,q=(a,b)=>{let x=sb.from(n).select("*",{count:"exact"});o.forEach(k=>x=x.order(k));return x.range(a,b)},f=await q(0,P-1);if(f.error||!f.count||f.count<=P)return f;const jobs=[];for(let a=P;a<Math.min(f.count,mx||1e9);a+=P)jobs.push(q(a,a+P-1));const rest=await Promise.all(jobs),bad=rest.find(r=>r.error);if(bad)return bad;return{data:f.data.concat(...rest.map(r=>r.data||[]))}};
-const rs=await Promise.all([t("site_settings"),sb.rpc("app_profiles").then(r=>r.error?pg("profiles",["id"]):r),sb.rpc("follow_summary").then(r=>r.error?pg("follows",["follower","followee"]).then(x=>{if(x.error)return x;const g={};(x.data||[]).forEach(r=>{(g[r.followee]??=[]).push(r.follower)});return{data:Object.keys(g).map(k=>({followee:k,n:g[k].length,mine:!!cur&&g[k].includes(cur),ids:g[k].slice(0,100)}))}}):r),t("articles"),sb.rpc("article_like_counts").then(r=>r.error?{data:[]}:r),t("article_saves"),t("comments"),t("comment_likes"),t("discussions").order("created_at",{ascending:false}).limit(400),pg("disc_likes",["disc_id","user_id"],10000),t("disc_saves"),t("replies"),t("reply_likes"),
+const rs=await Promise.all(Q?[t("site_settings"),sb.rpc("app_profiles").then(r=>r.error?pg("profiles",["id"]):r),none,Q.k==="a"?mix(one("articles",Q.id),lt("articles",6)):lt("articles",12),sb.rpc("article_like_counts").then(r=>r.error?{data:[]}:r),none,Q.k==="a"?t("comments").eq("article_id",Q.id):none,none,Q.k==="d"?mix(one("discussions",Q.id),lt("discussions",12)):Q.k==="h"?lt("discussions",12):none,none,none,Q.k==="d"?t("replies").eq("disc_id",Q.id):none,none,none,none,none,none]:[t("site_settings"),sb.rpc("app_profiles").then(r=>r.error?pg("profiles",["id"]):r),sb.rpc("follow_summary").then(r=>r.error?pg("follows",["follower","followee"]).then(x=>{if(x.error)return x;const g={};(x.data||[]).forEach(r=>{(g[r.followee]??=[]).push(r.follower)});return{data:Object.keys(g).map(k=>({followee:k,n:g[k].length,mine:!!cur&&g[k].includes(cur),ids:g[k].slice(0,100)}))}}):r),t("articles"),sb.rpc("article_like_counts").then(r=>r.error?{data:[]}:r),t("article_saves"),t("comments"),t("comment_likes"),t("discussions").order("created_at",{ascending:false}).limit(400),pg("disc_likes",["disc_id","user_id"],10000),t("disc_saves"),t("replies"),t("reply_likes"),
 cur?t("notifications").order("created_at",{ascending:false}).limit(100):none,cur?t("messages").order("created_at").limit(500):none,cur?t("reports").order("created_at",{ascending:false}).limit(200):none,cur?t("audit_log").order("created_at",{ascending:false}).limit(100):none]);
 const bad=[0,1,3,8].map(i=>rs[i]).find(r=>r&&r.error);if(bad)throw bad.error;rs.forEach(r=>{if(r&&r.error){console.warn("table load failed",r.error);r.data=[]}});
 const [st,pr,fo,ar,al,asv,cm,cl,ds,dl,dsv,rp,rl,nt,ms,rpt,lg]=rs.map(r=>r.data||[]);
@@ -838,9 +847,9 @@ reports:rpt.map(r=>({id:r.id,by:r.by_id,type:r.type,target:r.target,reason:r.rea
 log:lg.map(l=>({d:l.created_at,t:l.text})),
 set:Object.assign({},DEF,(st[0]&&st[0].data)||{})};
 const my=o.users.find(u=>u.id===cur);
-if(my&&my.role==="admin"){const r=await sb.rpc("admin_emails");(r.data||[]).forEach(x=>{const u=o.users.find(y=>y.id===x.id);if(u)u.email=x.email})}
-o.views=[];if(cur){try{const r=await sb.from("profile_views").select("*").eq("profile",cur).order("viewed_at",{ascending:false}).limit(100);if(!r.error)o.views=(r.data||[]).map(x=>({by:x.viewer,date:x.viewed_at}))}catch(e){}}
-db=o;if(cur){try{const r=await sb.from("blocks").select("blocked").eq("blocker",cur);if(!r.error)db.blocks=(r.data||[]).map(x=>x.blocked)}catch(e){}}applyBlocks();OFF=0;cacheSave();loaded=Date.now()}
+if(!Q&&my&&my.role==="admin"){const r=await sb.rpc("admin_emails");(r.data||[]).forEach(x=>{const u=o.users.find(y=>y.id===x.id);if(u)u.email=x.email})}
+o.views=[];if(cur&&!Q){try{const r=await sb.from("profile_views").select("*").eq("profile",cur).order("viewed_at",{ascending:false}).limit(100);if(!r.error)o.views=(r.data||[]).map(x=>({by:x.viewer,date:x.viewed_at}))}catch(e){}}
+db=o;if(cur&&!Q){try{const r=await sb.from("blocks").select("blocked").eq("blocker",cur);if(!r.error)db.blocks=(r.data||[]).map(x=>x.blocked)}catch(e){}}applyBlocks();OFF=0;if(!Q){cacheSave();loaded=Date.now()}}
 async function poll(){if(!sb||!cur||(document.hidden&&!("Notification" in window&&Notification.permission==="granted")))return;
 const[n,m]=await Promise.all([sb.from("notifications").select("*").order("created_at",{ascending:false}).limit(100),sb.from("messages").select("*").order("created_at").limit(500)]);
 if(n.error||m.error)return;const nn=n.data.map(mapN),mm=m.data.map(mapM),old=new Set(db.notifs.map(x=>x.id)),fresh=nn.filter(x=>!x.read&&!old.has(x.id)),ch=nn.length!==db.notifs.length||mm.length!==db.msgs.length;db.notifs=nn;db.msgs=mm;if(fresh.length&&document.hidden)pushLocal(fresh[0].text);
@@ -872,11 +881,17 @@ if(Date.now()-loaded>20000&&!bgBusy){bgBusy=1;const s0=dsig();loadAll().then(()=
 let spT0=Date.now(),spDone=0;
 function splashOn(){const e=$("#spl");if(!e)return;e.querySelector(".slw").innerHTML='<img class="sl lg" alt="" src="'+esc(L())+'">';e.querySelector(".sn").textContent=S().name;logoApply();setTimeout(splashDone,4500)}
 function splashDone(){if(spDone)return;const e=$("#spl");if(!e)return;spDone=1;setTimeout(()=>{e.classList.add("out");setTimeout(()=>e.remove(),420)},Math.max(0,600-(Date.now()-spT0)))}
+const deepLink=()=>{const h=(location.hash||"#/").slice(2).split("?")[0].split("/"),n=h[0],id=h[1]||"";return(n==="article"&&id)?{k:"a",id}:(n==="disc"&&id)?{k:"d",id}:(!n||n==="home"||n==="following")?{k:"h",id:""}:null};
+const bgRefresh=()=>{PEND=1;loadAll().catch(()=>{}).then(()=>{PEND=0;const a=document.activeElement;if(!cs&&!/auf|epf/.test(document.body.className)&&!(a&&a.matches&&a.matches("input,textarea")))try{rerender()}catch(e){}})};
+/* first visit (no cache): fetch only what the opened page needs, paint, then load everything else in the background */
+async function coldLoad(DL){if(!DL)return loadAll();
+try{await loadAll(DL);if(DL.k==="h"||(DL.k==="a"?db.articles:db.discs).some(x=>x.id===DL.id)){loaded=Date.now();bgRefresh();return}}catch(e){}
+return loadAll()}
 async function boot(){const recov=/type=recovery/.test(location.hash);
 db={users:[],articles:[],discs:[],notifs:[],msgs:[],reports:[],log:[],set:Object.assign({},DEF)};applySet();chrome();splashOn();
 if(!/^https:\/\//.test(SUPABASE_URL)||/PASTE_YOUR/.test(SUPABASE_URL+SUPABASE_KEY)||!window.supabase){$("#app").innerHTML='<div class="empty"><h2>Almost ready</h2><p>Open <b>config.js</b> in a text editor and paste your Supabase project URL and key into it.</p></div>';return}
 sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);$("#app").innerHTML=SKEL();
-try{const{data}=await sb.auth.getSession();cur=data.session?data.session.user.id:null;const c0=hyd(lsGet("tis-cache",null));if(c0&&c0.articles&&c0.articles.length&&c0.users&&(!cur||c0.users.some(u=>u.id===cur))){db={notifs:[],msgs:[],reports:[],log:[],views:[],blocks:[],...c0};loaded=Date.now();PEND=1;loadAll().catch(()=>{}).then(()=>{PEND=0;if(!cs&&!/auf|epf/.test(document.body.className))try{rerender()}catch(e){}})}else await loadAll()}catch(e){const c=hyd(lsGet("tis-cache",null));if(!c){$("#app").innerHTML=`<div class="nf3"><div class="nfc">:(</div><h2>Could not connect</h2><p>${esc(em(e))}</p><button onclick="location.reload()">Try again</button></div>`;return}db={notifs:[],msgs:[],reports:[],log:[],views:[],blocks:[],...c};OFF=1;loaded=Date.now()}
+try{const{data}=await sb.auth.getSession();cur=data.session?data.session.user.id:null;const c0=hyd(lsGet("tis-cache",null)),DL=deepLink();if(c0&&c0.articles&&c0.articles.length&&c0.users&&(!cur||c0.users.some(u=>u.id===cur))&&(!DL||DL.k==="h"||(DL.k==="a"?c0.articles:c0.discs).some(x=>x.id===DL.id))){db={notifs:[],msgs:[],reports:[],log:[],views:[],blocks:[],...c0};loaded=Date.now();PEND=1;loadAll().catch(()=>{}).then(()=>{PEND=0;if(!cs&&!/auf|epf/.test(document.body.className))try{rerender()}catch(e){}})}else await coldLoad(DL)}catch(e){const c=hyd(lsGet("tis-cache",null));if(!c){$("#app").innerHTML=`<div class="nf3"><div class="nfc">:(</div><h2>Could not connect</h2><p>${esc(em(e))}</p><button onclick="location.reload()">Try again</button></div>`;return}db={notifs:[],msgs:[],reports:[],log:[],views:[],blocks:[],...c};OFF=1;loaded=Date.now()}
 sb.auth.onAuthStateChange((ev,ss)=>{const n=ss?ss.user.id:null,ch=n!==cur;cur=n;setTimeout(()=>(ch?loadAll().catch(()=>{}):Promise.resolve()).then(()=>{if(ev==="PASSWORD_RECOVERY")location.hash="#/reset";else if(ch)route()}),0)});if(recov)location.hash="#/reset";
 applySet();addEventListener("hashchange",nav);setInterval(poll,45000);route()}
 const U=id=>db.users.find(u=>u.id===id)||{id,name:"Tech In Swahili (seed)",user:"seed",role:"user"};
@@ -1428,16 +1443,19 @@ setTimeout(()=>{if(!dp&&mob)show()},2500);
 })();
 (function(){const pe=document.createElement("div");pe.id="ptr";document.body.appendChild(pe);
 let y0=0,dy=0,on=0,busy=0;const T=56,feed=()=>document.querySelector(".feed");
-const top=()=>{const f=feed();return f&&f.scrollTop<=0};
+const top=()=>{const f=feed();return f?f.scrollTop<=0:scrollY<=0};
+const okp=()=>!/\b(auf|epf|mo)\b/.test(document.body.className)&&!document.querySelector("#pk,#cs,.crop-box,.dlg");
+const inner=t=>{for(;t&&t!==document.body&&t.nodeType===1;t=t.parentNode){const o=getComputedStyle(t).overflowY;if((o==="auto"||o==="scroll")&&t.scrollHeight>t.clientHeight&&t.scrollTop>0&&!t.classList.contains("feed"))return 1}return 0};
+let x0=0;
 const pos=d=>{const t=Math.min(d,T*1.4);pe.style.transition="none";pe.style.opacity=Math.min(1,d/T);pe.style.transform="translateY("+(t-6)+"px) rotate("+d*3+"deg)"};
 const rst=()=>{pe.style.transition="transform .25s,opacity .25s";pe.style.opacity=0;pe.style.transform="translateY(-50px)";pe.classList.remove("go")};
-addEventListener("touchstart",e=>{on=0;dy=0;if(busy||!document.body.classList.contains("fm")||cs||e.touches.length!==1||!top())return;y0=e.touches[0].clientY;on=1},{passive:true});
-addEventListener("touchmove",e=>{if(!on)return;dy=e.touches[0].clientY-y0;if(dy>0&&top()){if(e.cancelable)e.preventDefault();pos(dy*.55)}else if(dy<=0){on=0;rst()}},{passive:false});
+addEventListener("touchstart",e=>{on=0;dy=0;if(busy||!okp()||cs||e.touches.length!==1||!top()||inner(e.target)||(e.target.closest&&e.target.closest("input,textarea,select,.car,.cart,#ms")))return;y0=e.touches[0].clientY;x0=e.touches[0].clientX;on=1},{passive:true});
+addEventListener("touchmove",e=>{if(!on)return;if(Math.abs(e.touches[0].clientX-x0)>Math.abs(e.touches[0].clientY-y0)&&dy<=0){on=0;return}dy=e.touches[0].clientY-y0;if(dy>0&&top()){if(e.cancelable)e.preventDefault();pos(dy*.55)}else if(dy<=0){on=0;rst()}},{passive:false});
 const run=async()=>{busy=1;pe.style.opacity=1;pe.style.transition="transform .2s";pe.style.transform="translateY("+(T/2)+"px)";pe.classList.add("go");try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
 if(["","home"].includes((location.hash||"#/").slice(2).split("?")[0].split("/")[0]))SHK=new Map;
 document.documentElement.style.removeProperty("--az");
 if(document.body.classList.contains("fm")&&!cs)route();
-const s0=dsig();loadAll().catch(()=>{}).then(()=>{if(dsig()!==s0&&document.body.classList.contains("fm")&&!cs)try{rerender()}catch(e){}});
+const s0=dsig();loadAll().catch(()=>{}).then(()=>{if(dsig()!==s0&&okp()&&!cs)try{rerender()}catch(e){}});
 await new Promise(r=>setTimeout(r,350));rst();busy=0};
 addEventListener("touchend",()=>{if(!on)return;on=0;if(dy*.55<T){rst();return}run()},{passive:true});
 addEventListener("touchcancel",()=>{on=0;rst()},{passive:true});
