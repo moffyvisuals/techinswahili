@@ -734,6 +734,21 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .tce{font-size:0;line-height:0;opacity:1;color:#fff;transform:rotate(-8deg)}
 .tce svg{display:block;width:min(46cqw,13rem);height:min(46cqw,13rem);stroke-width:.6;opacity:.28;filter:drop-shadow(0 0 14px #ffffff40)}
 .tc .tce{right:-5%;bottom:-26%}.tc .tce svg{width:6.6rem;height:6.6rem;stroke-width:.7}
+
+/* ===== v5.1.52: profile article cards ===== */
+.pf-g.pa{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;padding:10px 12px}
+.atl{position:relative;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:4/5;border-radius:16px;overflow:hidden;color:#fff;text-align:left;container-type:inline-size;transition:transform .15s;background:radial-gradient(120% 65% at 85% 0,color-mix(in srgb,var(--cc) 66%,#fff) 0,transparent 62%),linear-gradient(165deg,color-mix(in srgb,var(--cc) 92%,#fff),color-mix(in srgb,var(--cc) 66%,#000))}
+.atl:active{transform:scale(.98)}
+.atl img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.atl:not(.np):after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(transparent 38%,#000c);pointer-events:none}
+.atp{position:absolute;left:.6rem;top:.6rem;z-index:1;max-width:68%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;background:#00000052;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-radius:99px;padding:.3rem .6rem;font:700 .68rem/1 "Bricolage Grotesque",system-ui,sans-serif}
+.atn{position:absolute;right:.6rem;top:.6rem;z-index:1;background:var(--ac);color:var(--on);border-radius:99px;padding:.3rem .55rem;font:700 .66rem/1 "Bricolage Grotesque",system-ui,sans-serif}
+.att{position:relative;z-index:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;padding:0 .8rem;font:800 .98rem/1.18 "Bricolage Grotesque",system-ui,sans-serif;text-shadow:0 1px 10px #0006;overflow-wrap:anywhere}
+.atm{position:relative;z-index:1;display:flex;align-items:center;gap:.3rem;padding:.45rem .8rem .75rem;font:700 .75rem/1 "Bricolage Grotesque",system-ui,sans-serif;opacity:.92}.atm svg{flex:none}.atm i{width:3px;height:3px;border-radius:50%;background:currentColor;opacity:.6;margin:0 .15rem}
+.atl.np{justify-content:center;align-items:center;text-align:center}
+.atl.pin .atp{max-width:calc(100% - 5.2rem)}
+.atl.np .att{padding:2.6rem .65rem 2.4rem;overflow-wrap:break-word;-webkit-line-clamp:6;font-size:1.1rem;font-size:min(calc(var(--k)*1cqw),1.8rem);line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
+.atl.np .atm{position:absolute;left:0;right:0;bottom:0;justify-content:center}
 </style>
 </head>
 <body>
@@ -829,7 +844,7 @@ const $=s=>document.querySelector(s);
 const SUPABASE_URL=(window.TIS_CONFIG||{}).url||"",SUPABASE_KEY=(window.TIS_CONFIG||{}).key||"";
 let sb,loaded=0,PEND=0;const viewed=new Set();
 const em=e=>!e?"":e.code==="42501"?"Not allowed. Your account may be suspended.":(e.message||String(e));
-let pq="",pf={id:"",t:"d",ed:0,o:"l"};function pfTab(t){pf.t=t;rerender()}
+let pq="",pf={id:"",t:"d",ed:0,o:"l"};function pfTab(t){pf.t=t;pf.u=1;rerender()}
 /* ===== Likes dialog ===== */
 /* ===== Followers / following / likes sheet ===== */
 let st={id:"",t:"fing",q:"",n:50};
@@ -905,7 +920,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.51";
+const APP_VERSION="5.1.52";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1267,11 +1282,12 @@ signup(){if(!S().reg)return`<div class="empty"><h2>Registration is closed</h2><p
 profile(id){const u=db.users.find(x=>x.id===id);if(!u)return nf();trackView(id);const m=me(),fo=u.followers||[],own=!!m&&m.id===id;if(pf.id!==id)pf={id,t:"d",ed:0,o:"l"};
 const dl=db.discs.filter(d=>d.uid===id),ar=db.articles.filter(a=>a.author===id&&a.status==="published"),fing=db.users.filter(x=>(x.followers||[]).includes(id)).length,
 lk=dl.reduce((n,d)=>n+d.likes.length,0)+ar.reduce((n,a)=>n+a.likes.length,0),
+atile=x=>{const T=String(x.title||""),n=[...T].length,k=n<=24?13.5:n<=40?11:n<=60?9.5:n<=90?8.5:7.8,[col,em]=cc(x.cat),np=!x.img;return`<a class="atl${np?" np":""}${x.pinned?" pin":""}" href="#/article/${x.id}" style="--cc:${col};--k:${k}">${np?"":`<img src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`}<span class="atp">${em} ${esc(x.cat)}</span>${x.pinned?'<span class="atn">Pinned</span>':""}<b class="att">${esc(T)}</b><span class="atm">${I("play",13)} ${kf(x.views||0)}<i></i>${I("heart",13)} ${kf((x.likes||[]).length)}</span></a>`},
 tile=(k,x)=>`<a class="tl" href="#/${k}/${x.id}"><div class="tb">${art(x.cat)}${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</div><div class="tt">${esc(x.title)}</div><div class="tm">${I("play",14)} ${kf(x.views||0)}${x.pinned?' <span class="pn">Pinned</span>':""}</div></a>`,
 so=l=>[...l].sort(pf.o==="p"?(p,q)=>q.x.likes.length-p.x.likes.length:pf.o==="o"?(p,q)=>p.x.date.localeCompare(q.x.date):(p,q)=>q.x.date.localeCompare(p.x.date)),
 both=f=>[...db.articles.filter(x=>f(x)&&x.status==="published").map(x=>({k:"article",x})),...db.discs.filter(f).map(x=>({k:"disc",x}))],
-tabs=[["d","Discussions"],...(ar.length?[["a","Articles"]]:[]),["l","Liked"],...(own?[["s","Saved"]]:[])];if(!tabs.some(t=>t[0]===pf.t))pf.t="d";
-const items=so(pf.t==="d"?dl.map(x=>({k:"disc",x})):pf.t==="a"?ar.map(x=>({k:"article",x})):pf.t==="l"?both(x=>x.likes.includes(id)):both(x=>x.saves.includes(id))).map(i=>tile(i.k,i.x));
+tabs=[...(ar.length?[["a","Articles"]]:[]),["d","Discussions"],["l","Liked"],...(own?[["s","Saved"]]:[])];if(!pf.u||!tabs.some(t=>t[0]===pf.t))pf.t=tabs[0][0];
+const items=so(pf.t==="d"?dl.map(x=>({k:"disc",x})):pf.t==="a"?ar.map(x=>({k:"article",x})):pf.t==="l"?both(x=>x.likes.includes(id)):both(x=>x.saves.includes(id))).map(i=>pf.t==="a"?atile(i.x):tile(i.k,i.x));
 const PEI={d:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/></svg>',a:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>',l:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',s:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>'},
 PET={d:["No posts yet","Discussions @"+u.user+" starts will show up here."],a:["No articles yet","Articles will show up here."],l:["No likes yet","Posts @"+u.user+" likes will show up here."],s:["Nothing saved yet","Saved posts will show up here."]},
 none=pf.t==="d"&&own?`<div class="empty pf-empty"><div class="pe-ic">${PEI.d}</div><b>Share your first thought</b><span>Start a discussion and let the community join in.</span><a class="btn" href="#/new">Start a discussion</a></div>`:`<div class="empty pf-empty"><div class="pe-ic">${PEI[pf.t]||PEI.d}</div><b>${PET[pf.t]?PET[pf.t][0]:"Nothing here yet"}</b><span>${esc(PET[pf.t]?PET[pf.t][1]:"")}</span></div>`;
@@ -1282,7 +1298,7 @@ ${pfSgHtml(id,own,m)}
 ${own&&pf.ed?`<div class="card" style="text-align:left;margin-bottom:1rem"><label>Profile photo</label><input type="file" id="ph" accept="image/*" onchange="cropOpen(this)"><div id="pv"></div><label>Bio</label><textarea id="bio" rows="3" maxlength="300">${esc(u.bio||"")}</textarea><button onclick="setBio()">Save profile</button></div>`:""}
 <p class="bio">${esc(u.bio||(own?"Add a short bio so people know who you are.":"No bio yet."))}</p><div class="meta">Joined ${fd(u.date)}${own?"":` <button class="rpl" onclick="rep('user','${id}')">Report</button> <button class="rpl" onclick="blockU('${id}')">${blocked().has(id)?"Unblock":"Block"}</button>`}</div>
 <div class="pf-tabs" role="tablist">${tabs.map(t=>`<button role="tab" aria-selected="${pf.t===t[0]}" class="${pf.t===t[0]?"on":""}" onclick="pfTab('${t[0]}')">${I({d:"grid",a:"news",l:"heart",s:"bookmark"}[t[0]],18)}<span>${t[1]}</span></button>`).join("")}<div class="pf-so">${[["l","Latest"],["p","Popular"],["o","Oldest"]].map(([k,t])=>`<button class="${pf.o===k?"on":""}" onclick="pfSort('${k}')">${t}</button>`).join("")}</div></div>
-${items.length?`<div class="pf-g">${items.join("")}</div>`:none}</div>`},
+${items.length?`<div class="pf-g${pf.t==="a"?" pa":""}">${items.join("")}</div>`:none}</div>`},
 inbox(w){const m=me();if(!m)return gate();if(w&&!/^[0-9a-f-]{36}$/i.test(w))w="";const th=db.msgs.filter(x=>x.from===m.id||x.to===m.id),ids=[...new Set(th.map(x=>x.from===m.id?x.to:x.from))];if(w&&!ids.includes(w))ids.unshift(w);
 if(w)markRead(w);
 const list=ids.map(i=>`<a class="card" href="#/inbox/${i}" style="margin-bottom:.4rem"><span class="row">${av(i,26)}<b>@${esc(U(i).user)}</b></span><span class="meta">${esc((th.filter(x=>x.from===i||x.to===i).pop()||{text:"New conversation"}).text.slice(0,40))}${db.msgs.filter(x=>x.from===i&&x.to===m.id&&!x.read).length?" ●":""}</span></a>`).join("")||'<div class="empty">No conversations. Open a profile and press Message.</div>';
