@@ -674,13 +674,13 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 ::selection{background:transparent}input::selection,textarea::selection,[contenteditable="true"] ::selection,[contenteditable="true"]::selection{background:color-mix(in srgb,var(--ac) 40%,transparent)}
 
 /* ===== v5.1.43: text covers for articles without photos + profile views ===== */
-.cv.tc{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;position:relative;isolation:isolate;container-type:inline-size;height:auto;min-height:150px;aspect-ratio:16/9;padding:5cqw;font-size:1rem;color:#fff;text-align:left;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--cc) 90%,#fff),color-mix(in srgb,var(--cc) 58%,#000))}
+.cv.tc{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;position:relative;isolation:isolate;container-type:inline-size;padding:1.1rem;font-size:1rem;color:#fff;text-align:left;overflow:hidden;background:linear-gradient(135deg,color-mix(in srgb,var(--cc) 90%,#fff),color-mix(in srgb,var(--cc) 58%,#000))}
 .cv.tc:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(120% 90% at 100% 0,#ffffff30,transparent 55%),repeating-linear-gradient(45deg,#0000 0 14px,#ffffff10 14px 24px)}
 .cv.tc1:before{background:radial-gradient(100% 100% at 0 100%,#ffffff30,transparent 55%),repeating-linear-gradient(-45deg,#0000 0 14px,#ffffff10 14px 24px)}
 .cv.tc2:before{background:radial-gradient(90% 120% at 50% 120%,#ffffff36,transparent 60%),repeating-linear-gradient(90deg,#0000 0 18px,#ffffff0d 18px 20px)}
 .tce{position:absolute;right:-3%;bottom:-16%;z-index:-1;font-style:normal;line-height:1;font-size:9rem;font-size:min(46cqw,13rem);opacity:.17;transform:rotate(-8deg)}
 .tcc{align-self:flex-start;max-width:62%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font:700 .72rem/1 "Bricolage Grotesque",system-ui,sans-serif;font-size:max(.68rem,2.9cqw);background:#0000003d;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);padding:.4em .75em;border-radius:99px}
-.tcb{position:absolute;right:5cqw;top:5cqw;font:700 .68rem/1 "Bricolage Grotesque",system-ui,sans-serif;font-size:max(.64rem,2.5cqw);opacity:.8;letter-spacing:.02em}
+.tcb{position:absolute;right:1.1rem;top:1.1rem;font:700 .68rem/1 "Bricolage Grotesque",system-ui,sans-serif;font-size:max(.64rem,2.5cqw);opacity:.8;letter-spacing:.02em}
 @container (max-width:330px){.tcb{display:none}}
 .tct{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;margin-top:auto;font:800 1.25rem/1.1 "Bricolage Grotesque",system-ui,sans-serif;font-size:min(calc(var(--k)*1cqw),2.6rem);letter-spacing:-.01em;text-wrap:balance;overflow-wrap:anywhere;text-shadow:0 2px 14px #0006}
 .vws{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin:.6rem 0 .2rem}
@@ -690,6 +690,22 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .vwr .fpn b{font-size:1rem}.vwr .fpn span{font-size:.84rem}.vwr .fpn .vwy{align-self:flex-start;margin-top:.25rem;font:700 .7rem/1 "Bricolage Grotesque",system-ui,sans-serif;color:var(--gd);background:color-mix(in srgb,var(--ac) 16%,transparent);padding:.25rem .5rem;border-radius:99px}
 .vwf{flex:none;background:var(--ac);color:var(--on);border:0;border-radius:999px;padding:.5rem 1.05rem;font-weight:700;font-size:.88rem}.vwf.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
 .vwg .nfs{margin-top:1.3rem}
+
+/* poster card as full-screen feed background */
+.fbg>.tc{position:absolute;inset:0;width:100%;height:100%;min-height:0;aspect-ratio:auto;border-radius:0;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 4.2rem) 1.5rem 58%}
+.fbg>.tc .tcc{margin-bottom:1rem;font-size:.8rem;max-width:80%}
+.fbg>.tc .tcb{display:none}
+.fbg>.tc .tct{margin-top:0;-webkit-line-clamp:7;font-size:2rem;font-size:min(calc(var(--k)*1.25cqw),3.4rem)}
+.fbg>.tc .tce{font-size:min(80cqw,22rem);right:-10%;bottom:auto;top:10%}
+.fs.nt .ft{display:none}
+
+/* text covers keep the exact height of photo covers inside article cards (no stretched neighbours) */
+.ac .cv.tc{padding:.7rem .8rem}
+.ac .tc .tcc{font-size:.66rem;padding:.35em .65em;max-width:80%}
+.ac .tc .tct{-webkit-line-clamp:3;font-size:1rem;font-size:calc(.55rem + var(--k)*.045rem);line-height:1.08}
+.ac .tc .tcb{display:none}
+.ac .tc .tce{font-size:6rem;right:-4%;bottom:-24%}
+.fe .tc .tct{font-size:min(calc(var(--k)*1cqw),1.9rem)}
 </style>
 </head>
 <body>
@@ -861,7 +877,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.43";
+const APP_VERSION="5.1.45";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1151,7 +1167,7 @@ if(fv==="fy"){const tp=lsGet("tis-topics",[]).map(nc),sc=i=>{const x=i.x,n=x.lik
 return l.sort((p,q)=>q.x.date.localeCompare(p.x.date)).slice(0,N||40)}
 function fslide(i){const A=i.k==="a",x=i.x,uid=A?x.author:x.uid,u=U(uid),m=me(),on=m&&x.likes.includes(m.id),sv=m&&x.saves.includes(m.id),n=A?x.comments.length:x.replies.length,
 fo=m&&(u.followers||[]).includes(m.id),canF=uid!=="seed"&&(!m||m.id!==uid)&&!fo,href="#/"+(A?"article/":"disc/")+x.id,body=A?mdText(x.body).slice(0,400):x.body;
-return`<section class="fs"><div class="fc"><div class="fbg" onclick="ftap(event,'${i.k}','${x.id}')">${art(x.cat)}${x.img?`<img class="fbb" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()"><img class="fff" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</div>
+return`<section class="fs${A&&!x.img?" nt":""}"><div class="fc"><div class="fbg" onclick="ftap(event,'${i.k}','${x.id}')">${A&&!x.img?tcov(x.cat,x.title):art(x.cat)}${x.img?`<img class="fbb" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()"><img class="fff" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</div>
 <div class="fi"><div class="fu">${ulink(uid,"@"+esc(u.user))}${vb(u)}<span class="meta">· ${ago(x.date)}</span></div><a href="${href}"><div class="ft">${esc(x.title)}</div><div class="fb2">${esc(body.slice(0,140))}${body.length>140?"… <b>more</b>":""}</div></a>${catTag(x.cats||x.cat)}</div></div>
 <div class="rail"><div class="ra">${ulink(uid,av(uid,48))}${canF?`<button class="fp" onclick="follow('${uid}')" aria-label="Follow">+</button>`:""}</div>
 <button class="rb ${on?"on":""}${on&&pk2===x.id?" pop":""}" onclick="${A?"likeA":"likeD"}('${x.id}')" aria-label="Like">${I("heart",34)}<span>${x.likes.length}</span></button>
