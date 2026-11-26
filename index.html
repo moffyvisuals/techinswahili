@@ -725,6 +725,15 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .cv.tc1:before{background:radial-gradient(90% 90% at 0 100%,#ffffff33,transparent 55%)}
 .cv.tc2{background:linear-gradient(160deg,color-mix(in oklab,var(--cc) 58%,#ffd36e) 0%,var(--cc) 48%,color-mix(in oklab,var(--cc) 50%,#220010) 100%)}
 .cv.tc2:before{background:radial-gradient(90% 100% at 50% 120%,#ffffff33,transparent 60%)}
+
+/* ---- v5.1.50: thin line-art category icons behind the cards (replaces emoji) ---- */
+.pste{right:-3.5rem;bottom:10%;width:min(80%,23rem);aspect-ratio:1;font-size:0;line-height:0;opacity:1;filter:none;transform:rotate(-10deg);color:#fff;-webkit-mask-image:linear-gradient(205deg,#000 0,#000a 40%,#0000 82%);mask-image:linear-gradient(205deg,#000 0,#000a 40%,#0000 82%)}
+.pste svg{display:block;width:100%;height:100%;stroke-width:.55;opacity:.3;filter:drop-shadow(0 0 20px #ffffff45)}
+.pste:before,.pste:after{content:"";position:absolute;border-radius:50%;border:1px solid #ffffff22}
+.pste:before{inset:-12%}.pste:after{inset:-28%;border-color:#ffffff14}
+.tce{font-size:0;line-height:0;opacity:1;color:#fff;transform:rotate(-8deg)}
+.tce svg{display:block;width:min(46cqw,13rem);height:min(46cqw,13rem);stroke-width:.6;opacity:.28;filter:drop-shadow(0 0 14px #ffffff40)}
+.tc .tce{right:-5%;bottom:-26%}.tc .tce svg{width:6.6rem;height:6.6rem;stroke-width:.7}
 </style>
 </head>
 <body>
@@ -896,7 +905,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.49";
+const APP_VERSION="5.1.50";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1126,6 +1135,19 @@ function toast(t){const e=$("#toast");e.textContent=t;e.style.display="block";cl
 function need(){if(me())return true;toast("Log in to do this");location.hash="#/login";return false}
 function tgl(arr,id){const i=arr.indexOf(id);i<0?arr.push(id):arr.splice(i,1);return i<0}
 const rt=m=>Math.max(1,Math.round(m.split(/\s+/).length/200));
+const CIC={"General Tech":'<rect x="3" y="4.5" width="18" height="12" rx="2"/><path d="M2 20h20"/>',
+"Tech News":'<path d="M4 4h13a1 1 0 0 1 1 1v14a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z"/><path d="M18 8h2a1 1 0 0 1 1 1v10a2 2 0 0 1-2 2"/><path d="M8 8h6M8 12h6M8 16h4"/>',
+"Gadgets & Reviews":'<path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6.5" rx="1.6"/><rect x="17" y="14" width="4" height="6.5" rx="1.6"/>',
+"Tips & Tutorials":'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.7.6 1 1.3 1 2.1h5c0-.8.3-1.5 1-2.1A6 6 0 0 0 12 3z"/>',
+"Networking":'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+"Programming":'<path d="M8 8l-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>',
+"Cybersecurity":'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',
+"Artificial Intelligence":'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 3v4M17 5h4M5 17v4M3 19h4"/>',
+"Computer Hardware":'<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>',
+"Mobile Tech":'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+"Tech Careers":'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
+"Ask the Community":'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/>'};
+const cic=c=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CIC[c]||CIC["General Tech"]}</svg>`;
 const CC={"General Tech":["#455a64","💻"],"Tech News":["#1565c0","📰"],"Gadgets & Reviews":["#5e35b1","🎧"],"Tips & Tutorials":["#e08a00","💡"],"Networking":["#0277bd","🌐"],"Programming":["#3b7d23","⌨️"],"Cybersecurity":["#c62828","🛡️"],"Artificial Intelligence":["#7c4dff","🤖"],"Computer Hardware":["#d84315","🔧"],"Mobile Tech":["#00796b","📱"],"Tech Careers":["#6d4c41","🎓"],"Ask the Community":["#ad1457","💬"]};
 const cc=c=>CC[c]||["#455a64","💡"];
 const N=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="#fff"/>`;
@@ -1143,7 +1165,7 @@ const ART={
 "Ask the Community":`<rect x="95" y="45" width="140" height="70" rx="14" fill="#ffffff30" stroke="#fff" stroke-width="4"/><rect x="170" y="95" width="140" height="70" rx="14" fill="#fff" opacity=".9"/><path d="M200 120H280M200 140H255" stroke="#888" stroke-width="6" stroke-linecap="round"/><path d="M125 75H205M125 95H175" stroke="#fff" stroke-width="6" stroke-linecap="round"/>`,
 "General Tech":`<rect x="115" y="45" width="170" height="105" rx="10" fill="#ffffff26" stroke="#fff" stroke-width="5"/><path d="M95 165H305M170 150V165M230 150V165" stroke="#fff" stroke-width="6" stroke-linecap="round"/><path d="M150 100H250M150 120H215" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/>`};
 const art=c=>{const col=cc(c)[0],id="ag"+col.slice(1);return`<svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:color-mix(in srgb,${col} 88%,#fff)"/><stop offset="1" style="stop-color:color-mix(in srgb,${col} 56%,#000)"/></linearGradient></defs><rect width="400" height="200" fill="url(#${id})"/><path d="M0 200L200 0H260L60 200Z" fill="#fff" opacity=".08"/><path d="M280 200L400 80V200Z" fill="#fff" opacity=".08"/>${ART[c]||ART["General Tech"]}</svg>`};
-const tcov=(c,t,st="")=>{const T=String(t||""),n=[...T].length,k=n<=24?11:n<=40?9:n<=60?7.4:n<=90?6.2:5.2,h=[...T].reduce((a,x)=>a+x.charCodeAt(0),0)%3,[col,em]=cc(c);return`<div class="cv tc tc${h}" style="--cc:${col};--k:${k};${st}" aria-hidden="true"><span class="tcc">${em} ${esc(c)}</span><span class="tcb">${esc(S().name)}</span><i class="tce">${em}</i><b class="tct">${esc(T)}</b></div>`};
+const tcov=(c,t,st="")=>{const T=String(t||""),n=[...T].length,k=n<=24?11:n<=40?9:n<=60?7.4:n<=90?6.2:5.2,h=[...T].reduce((a,x)=>a+x.charCodeAt(0),0)%3,[col,em]=cc(c);return`<div class="cv tc tc${h}" style="--cc:${col};--k:${k};${st}" aria-hidden="true"><span class="tcc">${em} ${esc(c)}</span><span class="tcb">${esc(S().name)}</span><i class="tce">${cic(c)}</i><b class="tct">${esc(T)}</b></div>`};
 const cover=(c,img,st="",t="")=>!img&&t?tcov(c,t,st):`<div class="cv" style="--cc:${cc(c)[0]};${st}" aria-hidden="true">${art(c)}${img?`<img src="${esc(img)}" alt="" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:100%;object-fit:cover" onerror="this.remove()">`:""}</div>`;
 const PAL=["#0277bd","#7c4dff","#c62828","#3b7d23","#d84315","#00796b","#ad1457","#455a64"];
 const av=(id,s=32)=>{const u=U(id),st=`width:${s}px;height:${s}px;border-radius:50%;flex:none;`;return u.photo?`<img src="${esc(u.photo)}" alt="" style="${st}object-fit:cover">`:`<span aria-hidden="true" style="${st}background:${PAL[[...String(id)].reduce((a,c)=>a+c.charCodeAt(0),0)%8]};color:#fff;display:inline-flex;align-items:center;justify-content:center;font:700 ${Math.round(s*.45)}px sans-serif;vertical-align:middle">${esc((u.name||u.user||"?")[0].toUpperCase())}</span>`};
@@ -1186,7 +1208,7 @@ if(fv==="fy"){const tp=lsGet("tis-topics",[]).map(nc),sc=i=>{const x=i.x,n=x.lik
 return l.sort((p,q)=>q.x.date.localeCompare(p.x.date)).slice(0,N||40)}
 const cutw=(t,n)=>{t=String(t||"");if(t.length<=n)return t;const c=t.slice(0,n),i=c.lastIndexOf(" ");return(i>n*.6?c.slice(0,i):c).replace(/[\s,.;:!?\-]+$/,"")};
 const fdesc=b=>{b=String(b||"").trim();const m=b.match(/^(.{20,90}?[.!?])(\s|$)/);if(m)return m[1];return b.length>90?b.slice(0,90).replace(/\s+\S*$/,"")+"\u2026":b};
-const fposter=(x,href)=>{const T=String(x.title||""),n=[...T].length,k=n<=24?14:n<=40?12:n<=60?10:n<=90?8.4:7,[col,em]=cc(x.cat),h=esc(T).replace(/\S*-\S*/g,m=>`<span class="nb">${m}</span>`);return`<div class="pst" style="--cc:${col};--k:${k}"><i class="pste" aria-hidden="true">${em}</i><a href="${href}"><b class="pstt">${h}</b></a></div>`};
+const fposter=(x,href)=>{const T=String(x.title||""),n=[...T].length,k=n<=24?14:n<=40?12:n<=60?10:n<=90?8.4:7,[col,em]=cc(x.cat),h=esc(T).replace(/\S*-\S*/g,m=>`<span class="nb">${m}</span>`);return`<div class="pst" style="--cc:${col};--k:${k}"><i class="pste" aria-hidden="true">${cic(x.cat)}</i><a href="${href}"><b class="pstt">${h}</b></a></div>`};
 function fslide(i){const A=i.k==="a",x=i.x,uid=A?x.author:x.uid,u=U(uid),m=me(),on=m&&x.likes.includes(m.id),sv=m&&x.saves.includes(m.id),n=A?x.comments.length:x.replies.length,
 fo=m&&(u.followers||[]).includes(m.id),canF=uid!=="seed"&&(!m||m.id!==uid)&&!fo,href="#/"+(A?"article/":"disc/")+x.id,body=A?mdText(x.body).slice(0,400):x.body;
 return`<section class="fs${A&&!x.img?" nt":""}"><div class="fc"><div class="fbg" onclick="ftap(event,'${i.k}','${x.id}')">${A&&!x.img?fposter(x,href):art(x.cat)}${x.img?`<img class="fbb" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true" onerror="this.remove()"><img class="fff" src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}</div>
