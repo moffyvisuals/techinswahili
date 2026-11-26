@@ -705,6 +705,12 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .ac .tc .tcb{display:none}
 .ac .tc .tce{font-size:6rem;right:-4%;bottom:-24%}
 .fe .tc .tct{font-size:min(calc(var(--k)*1cqw),1.9rem)}
+
+/* ---- v5.1.48: heading sits in a thin-bordered card; it shrinks with the picture when comments open ---- */
+.fs.nt .pst>a{width:fit-content;max-width:100%;padding:calc(1.5rem*(1 - .45*var(--shr,0))) calc(1.6rem*(1 - .45*var(--shr,0)));border:1px solid #ffffff4d;border-radius:24px;background:#ffffff14;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 8px 30px #0003;transition:padding .3s cubic-bezier(.2,.8,.2,1)}
+.fs.nt .fbg>.pst{padding:calc((env(safe-area-inset-top,0px) + 4.5rem)*(1 - var(--shr,0)) + .9rem*var(--shr,0)) calc(2.6rem*(1 - var(--shr,0)) + 1rem*var(--shr,0)) calc(10.5rem*(1 - var(--shr,0)) + .9rem*var(--shr,0)) calc(1.6rem*(1 - var(--shr,0)) + 1rem*var(--shr,0));transition:padding .3s cubic-bezier(.2,.8,.2,1)}
+.fs.nt .pstt{font-size:calc(min(calc(var(--k)*1cqw),3.4rem)*(1 - .5*var(--shr,0)));transition:font-size .3s cubic-bezier(.2,.8,.2,1)}
+.fbg.fdr>.pst,.fbg.fdr .pst>a,.fbg.fdr .pstt{transition:none!important}
 </style>
 </head>
 <body>
@@ -876,7 +882,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.47";
+const APP_VERSION="5.1.48";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -973,9 +979,9 @@ const vv=window.visualViewport,vh=vv?vv.height:innerHeight,vt=vv?vv.offsetTop:0,
 /* keyboard up: shorter sheet so the picture stays visible above it, dimmed */
 {const nh=kb?Math.max(230,Math.round(vh*.58))+"px":"";if(sh.style.height!==nh){sh.style.transition="none";sh.style.height=nh}}
 const H=(cmF.offsetParent||cmF.parentNode).clientHeight||innerHeight,ah=vt+vh-sh.offsetHeight,b0=Math.max(0,Math.round(H-ah+10));
-cmS={b0,H,ah};cmF.style.overflow="hidden";cmF.style.transition=tr===0?"none":cmEase;cmF.style.bottom=b0+"px";cmF.style.borderRadius="0 0 20px 20px";cmF.style.opacity=kb?".4":""}
-function cmDrag(d){if(!cmF||!cmS)return;const b=Math.max(0,cmS.b0-d),r=cmS.b0?20*b/cmS.b0:0;cmF.style.transition="none";cmF.style.bottom=b+"px";cmF.style.borderRadius="0 0 "+r+"px "+r+"px"}
-function cmFx(on){if(!on){if(!cmF)return;const g=cmF;cmF=null;cmS=null;document.body.classList.remove("cmo");g.style.transition=cmEase;g.style.bottom="";g.style.borderRadius="";g.style.opacity="";setTimeout(()=>{g.style.transition="";g.style.overflow=""},340);return}
+cmS={b0,H,ah};cmF.style.overflow="hidden";cmF.style.transition=tr===0?"none":cmEase;cmF.style.bottom=b0+"px";cmF.style.borderRadius="0 0 20px 20px";cmF.style.opacity=kb?".4":"";cmF.classList.remove("fdr");cmF.style.setProperty("--shr","1")}
+function cmDrag(d){if(!cmF||!cmS)return;const b=Math.max(0,cmS.b0-d),r=cmS.b0?20*b/cmS.b0:0;cmF.style.transition="none";cmF.style.bottom=b+"px";cmF.style.borderRadius="0 0 "+r+"px "+r+"px";cmF.classList.add("fdr");cmF.style.setProperty("--shr",cmS.b0?(b/cmS.b0).toFixed(3):"0")}
+function cmFx(on){if(!on){if(!cmF)return;const g=cmF;cmF=null;cmS=null;document.body.classList.remove("cmo");g.style.transition=cmEase;g.style.bottom="";g.style.borderRadius="";g.style.opacity="";g.classList.remove("fdr");g.style.setProperty("--shr","0");setTimeout(()=>{g.style.transition="";g.style.overflow="";g.style.removeProperty("--shr")},340);return}
 const f=document.querySelector(".feed");if(!f||!document.body.classList.contains("fm"))return;
 let g=cmFind();if(!g){const ss=[...f.querySelectorAll(":scope>.fs")],sec=ss[Math.round(f.scrollTop/Math.max(1,f.clientHeight))];g=sec&&sec.querySelector(".fbg")}
 if(!g)return;cmF=g;cmVH0=window.visualViewport?visualViewport.height:innerHeight;document.body.classList.add("cmo");const c=document.querySelector("#cs");c&&c.classList.add("nobg");cmFit()}
