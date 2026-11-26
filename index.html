@@ -654,6 +654,24 @@ header .mb{margin-right:-.4rem}
 .nfm{font-size:.8rem;color:var(--mu)}.nfi.un .nfm{color:var(--gd);font-weight:700}
 .nfd{background:none;color:var(--mu);padding:.6rem;margin-right:.45rem;border-radius:50%;line-height:0;flex:none}.nfd:hover{background:var(--bd);color:var(--tx)}
 .nfe{text-align:center;color:var(--mu);padding:3.5rem 1rem}.nfe svg{opacity:.45;margin-bottom:.6rem}.nfe p{margin:.2rem 0}.nfe b{color:var(--tx)}
+
+/* ===== v5.1.42: modern filter sheet + content protection ===== */
+.fpk .cxg{width:44px;height:5px;margin-top:10px}
+.fpk .cxh{border-bottom:0;padding-top:.8rem;padding-bottom:.2rem}.fpk .cxh b{font-size:1.15rem}
+.fpk .cxh button{background:color-mix(in srgb,var(--tx) 10%,transparent);border-radius:50%;line-height:0;padding:.45rem;top:.55rem;right:.9rem}
+.fpk .cgs{padding-bottom:.2rem;text-align:left;padding-left:1.1rem}
+.fpk .cgrid{padding:.7rem 1rem 1rem;align-content:start}
+.fpk .cgrid .pko.all{grid-column:1/-1;min-height:54px}
+.fpk .cgrid .pko .ce{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:1.25rem;background:color-mix(in srgb,var(--tx) 8%,transparent)}
+.fpk .cgrid .pko.on .ce{background:color-mix(in srgb,var(--ac) 24%,transparent)}
+.fpk .cgrid.cg1{grid-template-columns:1fr}.fpk .cgrid.cg1 .pko:last-child:nth-child(odd){grid-column:auto}
+.fpk .cgrid .pko{font-size:.9rem}
+@media(max-width:360px){.fpk .cgrid{grid-template-columns:1fr}}
+/* no text selection, long-press menus or image dragging (typing fields stay normal) */
+html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+input,textarea,[contenteditable="true"],[contenteditable=""]{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
+::selection{background:transparent}input::selection,textarea::selection,[contenteditable="true"] ::selection,[contenteditable="true"]::selection{background:color-mix(in srgb,var(--ac) 40%,transparent)}
 </style>
 </head>
 <body>
@@ -822,7 +840,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.41";
+const APP_VERSION="5.1.42";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1505,8 +1523,15 @@ let fbo={};
 function fbar(ph,s,c,o,opts){fbo={c:[["","All"],...CATS.map(x=>[x,x])],o:opts,t:{c:"Category",o:"Sort by"}};const ol=(opts.find(x=>x[0]===o)||opts[0])[1];
 return`<form class="fbar" onsubmit="filt();return false" role="search"><div class="fq">${I("search",18)}<input id="s" type="search" placeholder="${ph}" value="${esc(s)}" autocomplete="off" aria-label="${ph}"></div><input type="hidden" id="c" value="${esc(c)}"><input type="hidden" id="o" value="${esc(o||opts[0][0])}"><button type="button" class="chp${c?" on":""}" onclick="fpick('c')" aria-haspopup="dialog">${esc(c||"All")}</button><button type="button" class="chp" onclick="fpick('o')" aria-haspopup="dialog">${esc(ol)}</button></form>`}
 function fpick(k){pkClose(1);const cv=$("#"+k).value,e=document.createElement("div");e.id="pk";e.className="cxs";e.onclick=ev=>{if(ev.target===e)pkClose()};
-e.innerHTML=`<div class="cxb" role="dialog" aria-modal="true" aria-label="${fbo.t[k]}"><div class="cxg"></div><div class="cxh"><b>${fbo.t[k]}</b><button onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><div class="cxl pkl">${fbo[k].map(([v,t],i)=>`<button class="pko${v===cv?" on":""}" onclick="pkSet('${k}',${i})"><span>${esc(t)}</span><i></i></button>`).join("")}</div></div>`;
-document.body.appendChild(e);document.body.style.overflow="hidden"}
+const SI={new:"\u{1F552}",pop:"\u2764\uFE0F",liked:"\u2764\uFE0F",talk:"\u{1F4AC}",un:"\u2753"},cat=k==="c",em=(v,t)=>cat?(v?cc(v)[1]:"\u2728"):(SI[v]||"\u2022");
+e.innerHTML=`<div class="cxb cxa fpk" role="dialog" aria-modal="true" aria-label="${fbo.t[k]}"><div class="cxg"></div><div class="cxh"><b>${fbo.t[k]}</b><button type="button" onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><p class="cgs">${cat?"Show only one topic":"Choose how the list is ordered"}</p><div class="cxl pkl cgrid${cat?"":" cg1"}">${fbo[k].map(([v,t],i)=>`<button type="button" class="pko${v===cv?" on":""}${cat&&!v?" all":""}" onclick="pkSet('${k}',${i})"><span class="ce">${em(v,t)}</span><span class="cn">${esc(t)}</span>${I("chk",18)}</button>`).join("")}</div></div>`;
+document.body.appendChild(e);document.body.style.overflow="hidden";pkDrag(e)}
+/* drag the handle or title down to close a sheet */
+function pkDrag(e){const b=e.querySelector(".cxb");if(!b)return;[".cxg",".cxh"].forEach(q=>{const h=b.querySelector(q);if(!h)return;let y0=0,dy=0,on=0;
+h.addEventListener("touchstart",t=>{if(t.target.closest&&t.target.closest("button"))return;y0=t.touches[0].clientY;dy=0;on=1;b.style.transition="none"},{passive:true});
+h.addEventListener("touchmove",t=>{if(!on)return;dy=Math.max(0,t.touches[0].clientY-y0);b.style.transform="translateY("+dy+"px)"},{passive:true});
+const end=()=>{if(!on)return;on=0;b.style.transition="transform .2s";if(dy>90){b.style.transform="translateY(100%)";pkClose()}else b.style.transform=""};
+h.addEventListener("touchend",end);h.addEventListener("touchcancel",end)})}
 function pkSet(k,i){$("#"+k).value=fbo[k][i][0];pkClose(1);filt()}
 const RLS=[["user","Member","Read, like, comment and post discussions","user"],["moderator","Moderator","Review reports and remove content","eye"],["editor","Editor","Write and publish articles","pen"],["admin","Admin","Full access to everything","crown"]];
 function rlOpen(id){pkClose(1);const u=U(id),e=document.createElement("div");e.id="pk";e.className="cxs";e.onclick=ev=>{if(ev.target===e)pkClose()};
@@ -1730,6 +1755,16 @@ document.addEventListener("touchmove",e=>{if(!on||e.touches.length!==2)return;co
 document.addEventListener("touchend",e=>{if(e.touches.length<2)on=0},{passive:true});
 addEventListener("hashchange",()=>R.style.removeProperty("--az"));
 addEventListener("pageshow",()=>R.style.removeProperty("--az"));
+})();
+</script>
+<script>
+/* block selecting, copying, right-click and dragging outside typing fields */
+(function(){const ok=t=>{t=t&&t.nodeType===3?t.parentElement:t;return!!(t&&t.closest&&t.closest('input,textarea,[contenteditable="true"],[contenteditable=""]'))};
+const stop=e=>{if(e.cancelable)e.preventDefault()};
+document.addEventListener("contextmenu",e=>{if(!ok(e.target))stop(e)});
+["copy","cut","dragstart"].forEach(n=>document.addEventListener(n,e=>{if(!ok(e.target)&&!ok(document.activeElement))stop(e)}));
+document.addEventListener("selectstart",e=>{if(!ok(e.target))stop(e)});
+document.addEventListener("keydown",e=>{if((e.ctrlKey||e.metaKey)&&!e.shiftKey&&/^[acxus]$/i.test(e.key)&&!ok(e.target)&&!ok(document.activeElement))stop(e)});
 })();
 </script>
 </body>
