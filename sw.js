@@ -1,6 +1,6 @@
 // Tech In Swahili service worker (v52): the app opens from the phone's own copy instantly,
 // and checks for a newer copy in the background (it shows on the next open).
-const V="tis-shell-v71",SB="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js",SHELL=["./","index.html","config.js","manifest.webmanifest","icon-192.png","icon-512.png"];
+const V="tis-shell-v72",SB="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js",SHELL=["./","index.html","config.js","manifest.webmanifest","icon-192.png","icon-512.png"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>Promise.all([...SHELL.map(u=>c.add(u).catch(()=>{})),c.add(SB).catch(()=>{})])).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 async function tell(){const l=await self.clients.matchAll();l.forEach(c=>c.postMessage("tis-updated"))}
