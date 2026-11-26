@@ -614,6 +614,23 @@ header .bar{padding:.4rem 1rem;gap:.6rem}
 .mps1{display:flex;align-items:flex-end;height:44px;padding:0 4rem .4rem 1.1rem}
 .mo #mb{position:relative;z-index:40}
 header .mb{margin-right:-.4rem}
+
+/* search page */
+.sq{display:flex;align-items:center;gap:.6rem;height:50px;margin:.2rem 0 .6rem;padding:0 .6rem 0 1rem;border-radius:999px;background:color-mix(in srgb,var(--tx) 8%,transparent);color:var(--mu);border:1px solid transparent;transition:border-color .15s,background .15s}
+.sq:focus-within{border-color:var(--ac);background:color-mix(in srgb,var(--tx) 5%,transparent)}
+.sq svg{flex:none}
+.sq input{flex:1;min-width:0;background:none;border:0;margin:0;padding:0;border-radius:0;color:var(--tx);font-size:1rem;outline:0;-webkit-appearance:none;appearance:none;height:100%}
+.sq input::-webkit-search-cancel-button{display:none}
+.sqc{flex:none;display:grid;place-items:center;width:34px;height:34px;padding:0;border-radius:50%;background:color-mix(in srgb,var(--tx) 14%,transparent);color:var(--tx)}
+.sq input:placeholder-shown~.sqc{display:none}
+.sht{margin:1.5rem 0 .7rem;font:700 .8rem "Bricolage Grotesque",system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mu)}
+.tpg{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.tpt{display:flex;align-items:center;gap:.65rem;min-height:56px;padding:.55rem .7rem;text-align:left;border:1px solid var(--bd);border-radius:14px;background:color-mix(in srgb,var(--tx) 4%,transparent);color:var(--tx);font:600 .86rem/1.2 "Bricolage Grotesque",system-ui,sans-serif}
+.tpt:active{background:color-mix(in srgb,var(--tx) 10%,transparent)}
+.tpt i{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;font-style:normal;font-size:1.05rem}
+.tpt span{min-width:0}
+.rs a{padding:.6rem 0}
+.rs a svg{flex:none;color:var(--mu)}
 </style>
 </head>
 <body>
@@ -782,7 +799,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.39";
+const APP_VERSION="5.1.40";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -829,10 +846,10 @@ function sset(v){sq.v=v||"";ssave(sq.v);sq.t="top";route()}
 const arow=a=>`<a class="ar" href="#/article/${a.id}"><div class="th">${a.img?`<img src="${esc(a.img)}" alt="" loading="lazy">`:art(a.cat)}</div><div style="min-width:0"><b class="ui">${esc(a.title)}</b><span class="meta" style="display:block">${esc(a.cat)} · ♥ ${a.likes.length} · ${a.views} views</span></div></a>`,
 drow=d=>`<a class="ar" href="#/disc/${d.id}"><div class="th">${d.img?`<img src="${esc(d.img)}" alt="" loading="lazy">`:art(d.cat)}</div><div style="min-width:0"><b class="ui">${esc(d.title)}</b><span class="meta" style="display:block">${esc(U(d.uid).name)} · ♥ ${d.likes.length} · ${d.replies.length} replies</span></div></a>`;
 function sres(){const t=sq.v.trim().toLowerCase();
-if(!t){const l=rsr();return(l.length?`<h3 class="sh">Recent searches</h3>`+l.map((x,i)=>`<div class="rs"><a href="#/search" onclick="sset(rsr()[${i}]);return false">${I("clock",20)}<span>${esc(x)}</span></a><button aria-label="Remove" onclick="sdel(rsr()[${i}])">${I("x",18)}</button></div>`).join(""):"")+`<h3 class="sh">Explore topics</h3><div class="row">${CATS.map(c=>`<button class="g sm" onclick="sset('${esc(c)}')">${esc(c)}</button>`).join("")}</div>`}
+if(!t){const l=rsr();return(l.length?`<h3 class="sht">Recent searches</h3>`+l.map((x,i)=>`<div class="rs"><a href="#/search" onclick="sset(rsr()[${i}]);return false">${I("clock",20)}<span>${esc(x)}</span></a><button aria-label="Remove" onclick="sdel(rsr()[${i}])">${I("x",18)}</button></div>`).join(""):"")+`<h3 class="sht">Explore topics</h3><div class="tpg">${CATS.map(c=>`<button class="tpt" onclick="sset('${esc(c)}')"><i style="background:${cc(c)[0]}">${cc(c)[1]}</i><span>${esc(c)}</span></button>`).join("")}</div>`}
 const us=plist(sq.v,sq.t==="top"?3:60),ar=pub().filter(a=>(a.title+" "+a.body+" "+catsOf(a).join(" ")).toLowerCase().includes(t)),ds=db.discs.filter(d=>(d.title+" "+d.body+" "+catsOf(d).join(" ")).toLowerCase().includes(t)),
 A=n=>ar.slice(0,n).map(arow).join("")||'<p class="meta">No articles found.</p>',D=n=>ds.slice(0,n).map(drow).join("")||'<p class="meta">No discussions found.</p>';
-return sq.t==="users"?us:sq.t==="articles"?A(50):sq.t==="disc"?D(50):`<h3 class="sh">Users</h3>${us}<h3 class="sh">Articles</h3>${A(3)}<h3 class="sh">Discussions</h3>${D(3)}`}
+return sq.t==="users"?us:sq.t==="articles"?A(50):sq.t==="disc"?D(50):`<h3 class="sht">Users</h3>${us}<h3 class="sht">Articles</h3>${A(3)}<h3 class="sht">Discussions</h3>${D(3)}`}
 function stabs(){return sq.v.trim()?`<div class="pf-tabs" role="tablist">${[["top","Top"],["users","Users"],["articles","Articles"],["disc","Discussions"]].map(([k,l])=>`<button role="tab" aria-selected="${sq.t===k}" class="${sq.t===k?"on":""}" onclick="stab('${k}')">${l}</button>`).join("")}</div>`:""}
 function sfind(v){sq.v=v;$("#stabs").innerHTML=stabs();$("#sres").innerHTML=sres()}
 function stab(t){sq.t=t;$("#stabs").innerHTML=stabs();$("#sres").innerHTML=sres()}
@@ -1119,7 +1136,7 @@ new(){if(!me())return gate();if(!S().discs)return`<div class="empty">New discuss
 <div class="dfg">${phHtml()}</div>
 <button class="dfpost">${I("send",18)}Post discussion</button></form>`},
 people(){sq.t="users";return R.search()},
-search(){return`<div class="wide" style="margin:auto"><form class="sp big" onsubmit="return ssub(event)" role="search"><input id="sqi" type="search" value="${esc(sq.v)}" placeholder="Search" oninput="sfind(this.value)" autocomplete="off" aria-label="Search"><button type="submit" aria-label="Search">${I("search",20)}</button></form><div id="stabs">${stabs()}</div><div id="sres">${sres()}</div></div>`},
+search(){return`<div class="wide" style="margin:auto"><form class="sq" onsubmit="return ssub(event)" role="search">${I("search",20)}<input id="sqi" type="search" enterkeyhint="search" value="${esc(sq.v)}" placeholder="Search articles, people, topics" oninput="sfind(this.value)" autocomplete="off" aria-label="Search"><button type="button" class="sqc" aria-label="Clear" onclick="const i=$('#sqi');i.value='';sfind('');i.focus()">${I("x",18)}</button></form><div id="stabs">${stabs()}</div><div id="sres">${sres()}</div></div>`},
 forgot(){return`<form class="au" onsubmit="return doForgot(event)">${auHead("Reset password","Enter your email and we will send you a reset link.")}${auF("e","mail","Email","email","required autocomplete=email")}<p id="err" class="aerr"></p><button class="aub">Send reset link</button><p class="aus"><a href="#/login">Back to log in</a></p></form>`},
 reset(){if(!cur)return`<div class="empty">This reset link has expired. <a href="#/forgot">Request a new one</a>.</div>`;return`<form class="form" onsubmit="return doReset(event)"><h1>Choose a new password</h1><label>New password (8+ characters, with a number)</label><input id="p" type="password" required minlength="8" autocomplete="new-password"><p id="err" style="color:var(--er)"></p><button>Save password</button></form>`},
 login(){return`<form class="au" onsubmit="return doLogin(event)">${auHead("Welcome back","Log in to join the conversation.")}${auF("e","mail","Email","email","required autocomplete=email")}${auF("p","lock","Password","password","required autocomplete=current-password")}<a class="aufg" href="#/forgot">Forgot password?</a><p id="err" class="aerr"></p><button class="aub">Log in</button><p class="aus">New here? <a href="#/signup">Create account</a></p></form>`},
