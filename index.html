@@ -631,6 +631,29 @@ header .mb{margin-right:-.4rem}
 .tpt span{min-width:0}
 .rs a{padding:.6rem 0}
 .rs a svg{flex:none;color:var(--mu)}
+
+/* ===== Notifications ===== */
+.nf{max-width:640px;margin:0 auto;font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.nfh{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin:.2rem 0 1rem}.nfh h1{font-size:2rem;margin:0}.nfh .meta{margin:.25rem 0 0}
+.nfr{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.5rem .95rem;white-space:nowrap}
+.nfc{display:flex;gap:.5rem}
+.nfch{background:transparent;color:var(--mu);border:1px solid var(--bd);border-radius:999px;padding:.4rem .95rem;font-weight:600}.nfch.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.nfs{font-size:.76rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mu);margin:1.5rem 0 .55rem .2rem;font-weight:700}
+.nfl{background:var(--sf);border:1px solid var(--bd);border-radius:18px;overflow:hidden}
+.nfi{position:relative;display:flex;align-items:center;border-bottom:1px solid var(--bd)}.nfi:last-child{border-bottom:0}
+.nfi.un{background:color-mix(in srgb,var(--ac) 9%,transparent)}
+.nfi.un:before{content:"";position:absolute;left:7px;top:50%;width:7px;height:7px;margin-top:-3.5px;border-radius:50%;background:var(--ac)}
+.nfa{flex:1;min-width:0;display:flex;align-items:center;gap:.85rem;padding:.85rem 0 .85rem 1.2rem;color:var(--tx);-webkit-tap-highlight-color:transparent}.nfa:active{background:var(--bd)}
+.nfav{position:relative;flex:none;display:inline-flex}
+.nfph{width:46px;height:46px;border-radius:50%;background:var(--bd);color:var(--mu);display:flex;align-items:center;justify-content:center}
+.nfb{position:absolute;right:-4px;bottom:-4px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;border:2px solid var(--sf);font-style:normal;background:var(--nb,#455a64)}.nfb svg{stroke-width:2.4}
+.nfi.un .nfb{border-color:color-mix(in srgb,var(--ac) 9%,var(--sf))}
+.nfb-heart{--nb:#e8365d}.nfb-heart svg{fill:#fff}.nfb-chat{--nb:#2f80ed}.nfb-follow{--nb:#3b7d23}.nfb-send{--nb:#7c4dff}
+.nft{display:flex;flex-direction:column;min-width:0;gap:.2rem}
+.nfx{font-size:.95rem;line-height:1.35;color:var(--mu);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}.nfx b{color:var(--tx);font-weight:700}.nfx q{quotes:none;color:var(--tx);font-weight:600}.nfi.un .nfx{color:var(--tx)}
+.nfm{font-size:.8rem;color:var(--mu)}.nfi.un .nfm{color:var(--gd);font-weight:700}
+.nfd{background:none;color:var(--mu);padding:.6rem;margin-right:.45rem;border-radius:50%;line-height:0;flex:none}.nfd:hover{background:var(--bd);color:var(--tx)}
+.nfe{text-align:center;color:var(--mu);padding:3.5rem 1rem}.nfe svg{opacity:.45;margin-bottom:.6rem}.nfe p{margin:.2rem 0}.nfe b{color:var(--tx)}
 </style>
 </head>
 <body>
@@ -799,7 +822,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.40";
+const APP_VERSION="5.1.41";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1165,8 +1188,12 @@ if(w)markRead(w);
 const list=ids.map(i=>`<a class="card" href="#/inbox/${i}" style="margin-bottom:.4rem"><span class="row">${av(i,26)}<b>@${esc(U(i).user)}</b></span><span class="meta">${esc((th.filter(x=>x.from===i||x.to===i).pop()||{text:"New conversation"}).text.slice(0,40))}${db.msgs.filter(x=>x.from===i&&x.to===m.id&&!x.read).length?" ●":""}</span></a>`).join("")||'<div class="empty">No conversations. Open a profile and press Message.</div>';
 const c=w?th.filter(x=>x.from===w||x.to===w):[];
 return`<h1>Inbox</h1><div class="in"><div>${list}</div><div>${w?`<h3>@${esc(U(w).user)}</h3><div class="msgs" id="ms">${c.map(x=>`<div class="m ${x.from===m.id?"me":""}">${esc(x.text)}<div class="meta" style="color:inherit;opacity:.7">${new Date(x.date).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}${x.from===m.id?(x.read?" ✓✓":" ✓"):""}</div></div>`).join("")||'<div class="empty">Say hello.</div>'}</div><form class="row" onsubmit="return send(event,'${w}')"><input id="mt" style="flex:1;margin:0" maxlength="1000" placeholder="Message" required><button>Send</button></form>`:'<div class="empty">Select a conversation.</div>'}</div></div>`},
-notifs(){const m=me();if(!m)return gate();const l=db.notifs.filter(x=>x.to===m.id);
-return`<div class="row"><h1 style="margin-right:auto">Notifications</h1><button class="g" onclick="readAll()">Mark all read</button></div>${l.map(n=>`<div class="card row" style="margin-bottom:.5rem;${n.read?"opacity:.6":""}"><a href="${esc(n.link)}" style="flex:1" onclick="readN('${n.id}')">${esc(n.text)}<br><span class="meta">${fd(n.date)}</span></a><button class="g sm" onclick="delN('${n.id}')">Delete</button></div>`).join("")||'<div class="empty">You are all caught up.</div>'}`},
+notifs(){const m=me();if(!m)return gate();const all=db.notifs.filter(x=>x.to===m.id).sort((x,y)=>String(y.date).localeCompare(String(x.date))),un=all.filter(x=>!x.read).length,l=NF==="un"?all.filter(x=>!x.read):all;
+const td=new Date().toDateString(),yd=new Date(Date.now()-864e5).toDateString(),wk=Date.now()-6048e5,sec=n=>{const d=new Date(n.date),k=d.toDateString();return k===td?"Today":k===yd?"Yesterday":+d>wk?"This week":"Earlier"};
+const secs=[];nfGroups(l).forEach(g=>{const k=sec(g.n);let s=secs.find(x=>x.k===k);if(!s)secs.push(s={k,l:[]});s.l.push(g)});
+return`<div class="nf"><div class="nfh"><div><h1>Notifications</h1><p class="meta">${un?un+" unread":"You are all caught up"}</p></div>${un?`<button class="g sm nfr" onclick="readAll()">${I("chk",16)}Mark all read</button>`:""}</div>
+<div class="nfc"><button class="nfch ${NF==="all"?"on":""}" onclick="nfSet('all')">All</button><button class="nfch ${NF==="un"?"on":""}" onclick="nfSet('un')">Unread${un?" · "+un:""}</button></div>
+${secs.map(s=>`<h2 class="nfs">${s.k}</h2><div class="nfl">${s.l.map(nfItem).join("")}</div>`).join("")||`<div class="nfe">${I("bell",40)}<p><b>${NF==="un"?"No unread notifications":"Nothing here yet"}</b></p><p class="meta">${NF==="un"?"You have read everything.":"Likes, comments and new followers will show up here."}</p></div>`}</div>`},
 saved(){const m=me();if(!m)return gate();const a=db.articles.filter(x=>x.saves.includes(m.id)),d=db.discs.filter(x=>x.saves.includes(m.id));
 return`<h1>Saved content</h1><h2 id="u-art">Articles</h2><div class="grid">${a.map(aCard).join("")||'<div class="empty">No saved articles.</div>'}</div><h2 style="margin-top:1.5rem">Discussions</h2>${d.map(dCard).join("")||'<div class="empty">No saved discussions.</div>'}`},
 edit(id){return aePage(id)},
@@ -1546,6 +1573,16 @@ if(!await upd("profiles",v,"id",cur))return;Object.assign(m,v);pf.ed=0;cropBlob=
 async function send(e,to){e.preventDefault();if(!S().msgs){toast("Messaging is turned off");return false}const t=$("#mt").value.trim();if(!t)return false;const last=db.msgs.filter(x=>x.from===cur&&Date.now()-new Date(x.date)<10000);if(last.length>=S().msgRate){toast("Slow down: too many messages");return false}
 const{data,error}=await sb.from("messages").insert({from_id:cur,to_id:to,text:t}).select().single();if(error){toast(em(error));return false}
 db.msgs.push({id:data.id,from:cur,to,text:t,date:data.created_at,read:0});route();return false}
+let NF="all";
+function nfSet(v){NF=v;rerender()}
+function nfRel(d){const t=(Date.now()-new Date(d))/1e3;return t<60?"now":t<3600?Math.floor(t/60)+"m":t<86400?Math.floor(t/3600)+"h":t<604800?Math.floor(t/86400)+"d":fd(d)}
+function nfParse(n){const x=String(n.text||"");let m=x.match(/^(\S+)\s+(.*?)\s*["\u201c](.*)["\u201d]\s*$/s)||x.match(/^(\S+)\s+(.*)$/s);if(!m)return{u:null,v:x,t:""};const u=db.users.find(y=>y.user===m[1]);return u?{u:u.id,v:m[2].trim(),t:m[3]||""}:{u:null,v:x,t:""}}
+function nfGroups(l){const g=[],ix={};for(const n of l){const p=nfParse(n),k=p.u&&p.t?p.v+"|"+p.t+"|"+new Date(n.date).toDateString():"";if(k&&ix[k]){const x=ix[k];x.ids.push(n.id);if(p.u&&!x.who.includes(p.u))x.who.push(p.u);if(!n.read)x.un=1;continue}const x={ids:[n.id],who:p.u?[p.u]:[],p,n,un:!n.read};g.push(x);if(k)ix[k]=x}return g}
+function nfItem(g){const p=g.p,t=/like/i.test(p.v)?"heart":/comment|repl|mention/i.test(p.v)?"chat":/follow/i.test(p.v)?"follow":/message|sent/i.test(p.v)?"send":"bell",ids=esc(g.ids.join(",")),o=g.who.length-1;
+const txt=p.u?`<b>${esc(U(g.who[0]).user)}</b>${o>0?` and ${o} other${o>1?"s":""}`:""} ${esc(p.v)}${p.t?` <q>${esc(p.t)}</q>`:""}`:esc(g.n.text);
+return`<div class="nfi ${g.un?"un":""}"><a class="nfa" href="${esc(g.n.link||"#/notifs")}" onclick="readNs('${ids}')"><span class="nfav">${p.u?av(g.who[0],46):`<span class="nfph">${I("bell",22)}</span>`}<i class="nfb nfb-${t}">${I(t,12)}</i></span><span class="nft"><span class="nfx">${txt}</span><span class="nfm">${nfRel(g.n.date)}</span></span></a><button class="nfd" onclick="delNs('${ids}')" aria-label="Delete">${I("x",18)}</button></div>`}
+function readNs(s){const ids=s.split(",");db.notifs.forEach(n=>{if(ids.includes(n.id))n.read=1});ids.forEach(i=>RD.add(i));rdSave();sb.from("notifications").update({read:true}).in("id",ids).then(()=>{})}
+function delNs(s){const ids=s.split(",");db.notifs=db.notifs.filter(n=>!ids.includes(n.id));sb.from("notifications").delete().in("id",ids).then(()=>{});rerender()}
 function readN(id){const n=db.notifs.find(x=>x.id===id);if(n)n.read=1;RD.add(id);rdSave();sb.from("notifications").update({read:true}).eq("id",id).then(()=>{})}
 function readAll(){db.notifs.forEach(n=>{if(n.to===cur){n.read=1;RD.add(n.id)}});rdSave();sb.from("notifications").update({read:true}).eq("user_id",cur).eq("read",false).then(()=>{});rerender()}
 function delN(id){db.notifs=db.notifs.filter(n=>n.id!==id);sb.from("notifications").delete().eq("id",id).then(()=>{});rerender()}
