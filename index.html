@@ -805,6 +805,54 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .xu{margin-top:10px;gap:8px;font-size:.88rem;font-weight:600}
 .xu .xn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .xu .xe{margin-left:auto;display:inline-flex;align-items:center;gap:.3rem;font-weight:500;font-size:.8rem;color:var(--mu)}
+
+/* ---- v5.1.56: modern desktop home ---- */
+@media(min-width:721px){
+.dh{max-width:1360px;margin:0 auto}
+.dh-top{position:sticky;top:0;z-index:4;margin:-24px -32px 20px;padding:16px 32px;background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4)}
+.dh-tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:color-mix(in srgb,var(--tx) 7%,transparent)}
+.dh-tabs button{height:38px;padding:0 1.15rem;border:0;border-radius:999px;background:transparent;color:var(--mu);font:600 .92rem "Bricolage Grotesque",sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.dh-tabs button:hover{color:var(--tx)}
+.dh-tabs button.on{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 62%,#fff));color:var(--on)}
+.dh-wrap{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+.dh-main{min-width:0}
+.dcv{position:relative;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:color-mix(in srgb,var(--tx) 9%,transparent)}
+.dcv>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.dkd{position:absolute;right:10px;top:10px;z-index:2;padding:.28rem .65rem;border-radius:999px;background:#0000005c;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:600 .7rem "Bricolage Grotesque",sans-serif}
+.dca{position:absolute;inset:0;z-index:1;border-radius:inherit}
+.dh-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:30px;align-items:center;padding:14px;margin-bottom:26px;border-radius:32px;background:color-mix(in srgb,var(--tx) 4%,transparent);border:1px solid var(--bd);transition:box-shadow .3s,transform .3s;animation:xin .5s cubic-bezier(.2,.8,.2,1) both}
+.dh-hero:hover{box-shadow:0 20px 60px #0005}.dh-hero:hover .dcv>img,.dc:hover .dcv>img{transform:scale(1.04)}
+.dh-hero .dcv.big{border-radius:24px}
+.dhr{display:flex;flex-direction:column;align-items:flex-start;gap:14px;padding:10px 22px 10px 4px;min-width:0}
+.dhf{padding:.3rem .8rem;border-radius:999px;background:color-mix(in srgb,var(--ac) 20%,transparent);color:var(--ac);font:700 .72rem "Bricolage Grotesque",sans-serif;letter-spacing:.08em;text-transform:uppercase}
+.dhr h2{margin:0;font:800 clamp(1.7rem,2.5vw,2.5rem)/1.1 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;text-wrap:balance;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.dhr p{margin:0;color:var(--mu);font-size:1.02rem;line-height:1.6;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.dhu{display:flex;align-items:center;gap:12px;font-size:.95rem}.dhu b{display:flex;align-items:center;gap:.3rem}.dhu small{display:block;margin-top:2px;color:var(--mu);font-size:.8rem;font-weight:500}
+.dhs{position:relative;z-index:2;display:flex;align-items:center;gap:8px;width:100%;flex-wrap:wrap}
+.dhe{display:inline-flex;align-items:center;gap:.35rem;color:var(--mu);font:600 .82rem "Bricolage Grotesque",sans-serif}
+.dhgo{margin-left:auto;padding:.7rem 1.25rem;border-radius:999px;background:var(--ac);color:var(--on);font-weight:700;font-size:.92rem}
+.dh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:22px}
+.dc{position:relative;display:flex;flex-direction:column;overflow:hidden;border-radius:24px;background:color-mix(in srgb,var(--tx) 4%,transparent);border:1px solid var(--bd);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s;animation:xin .5s cubic-bezier(.2,.8,.2,1) both}
+.dc:hover{transform:translateY(-4px);box-shadow:0 18px 44px #0006;border-color:color-mix(in srgb,var(--tx) 22%,transparent)}
+.dc .dcv{border-radius:0}
+.dcb{flex:1;padding:16px 18px 6px}
+.dcb h3{margin:0 0 .5rem;font:700 1.12rem/1.25 "Bricolage Grotesque",sans-serif;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dcb p{margin:0;color:var(--mu);font-size:.9rem;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.dcf{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 14px 18px}
+.dcu{display:flex;align-items:center;gap:8px;min-width:0;font-size:.85rem;font-weight:600}.dcu .xn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dcu em{flex:none;font-style:normal;color:var(--mu);font-weight:500}
+.dcs{display:inline-flex;gap:2px;flex:none}
+.dcs button{display:inline-flex;align-items:center;gap:.3rem;height:34px;padding:0 .6rem;border:0;border-radius:999px;background:transparent;color:var(--mu);font:600 .8rem "Bricolage Grotesque",sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.dcs button:hover{background:color-mix(in srgb,var(--tx) 9%,transparent);color:var(--tx)}
+.dcs button.on{color:var(--ac)}.dcs button.on svg{fill:currentColor}
+.dh-more{display:block;margin:28px auto 8px;padding:.85rem 2.2rem;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--tx);font-weight:700;cursor:pointer}.dh-more:hover{background:color-mix(in srgb,var(--tx) 7%,transparent)}
+.dh-side{display:none}
+@media(min-width:1180px){.dh-wrap{grid-template-columns:minmax(0,1fr) 270px}.dh-side{display:block;position:sticky;top:84px;padding:18px;border-radius:24px;background:color-mix(in srgb,var(--tx) 4%,transparent);border:1px solid var(--bd)}}
+.dh-side h4{margin:0 0 .6rem .4rem;font:700 .74rem "Bricolage Grotesque",sans-serif;letter-spacing:.09em;text-transform:uppercase;color:var(--mu)}
+.dh-side a{display:flex;align-items:center;gap:.65rem;padding:.55rem .5rem;border-radius:12px;font-weight:600;font-size:.92rem}
+.dh-side a:hover{background:color-mix(in srgb,var(--tx) 8%,transparent)}
+.dh-side i{flex:none;width:9px;height:9px;border-radius:50%}.dh-side em{margin-left:auto;font-style:normal;font-size:.8rem;font-weight:500;color:var(--mu)}
+@media(max-width:1060px){.dh-hero{grid-template-columns:1fr}.dhr{padding:6px 10px 10px}}
+}
 </style>
 </head>
 <body>
@@ -976,7 +1024,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.55";
+const APP_VERSION="5.1.56";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1302,7 +1350,7 @@ function aCard(a){return`<a class="card ac" href="#/article/${a.id}">${cover(a.c
 function dCard(d){const u=U(d.uid),m=me();return`<article class="fd"><div class="row"><a href="#/profile/${d.uid}" class="row" style="gap:.6rem;flex-wrap:nowrap">${av(d.uid,42)}<span><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${ago(d.date)}</span></span></a><span style="margin-left:auto">${d.pinned?"📌 ":""}${d.locked?"🔒 ":""}${catTag(d.cats||d.cat)}</span></div><a href="#/disc/${d.id}" class="fb"><h3>${esc(d.title)}</h3><p>${esc(d.body.slice(0,160))}${d.body.length>160?"…":""}</p>${car(d.imgs)}</a><div class="row"><button class="g sm ${m&&d.likes.includes(m.id)?"on":""}" onclick="likeD('${d.id}')">♥ ${d.likes.length}</button><button class="g sm" onclick="location.hash='#/disc/${d.id}'">💬 ${d.replies.length}</button><button class="g sm" onclick="wa('${d.id}','disc')">WhatsApp</button><span class="meta" style="margin-left:auto">${d.views} views</span></div></article>`}
 const pub=()=>db.articles.filter(a=>a.status==="published");
 let fv="fy",lt=0,ltid="",FN=8,FL=[];
-const fset=t=>{fv=t;FN=8;route()};
+const fset=t=>{fv=t;FN=8;DN=12;route()};
 document.addEventListener("scroll",ev=>{const f=ev.target;if(!f||f.id!=="feed"||FL.length<=FN)return;if(f.scrollTop+f.clientHeight*2.5>=f.scrollHeight){const nx=FL.slice(FN,FN+8).map(fslide).join("");FN+=8;f.insertAdjacentHTML("beforeend",nx)}},true);
 let SHK=null;
 function fitems(){const l=fitemsB(120);if(!SHK)return l.slice(0,40);l.forEach(i=>{if(!SHK.has(i.x.id))SHK.set(i.x.id,Math.random())});return l.sort((p,q)=>SHK.get(p.x.id)-SHK.get(q.x.id)).slice(0,40)}
@@ -1331,8 +1379,26 @@ function pgn(l,q,base){const N=10,t=l.length,pc=Math.max(1,Math.ceil(t/N));let p
 const h=n=>{const u=new URLSearchParams(q);n>1?u.set("p",n):u.delete("p");const s=u.toString();return"#/"+base+(s?"?"+s:"")};
 const b=(n,txt,off,c)=>off?`<span class="pgb off ${c}">${txt}</span>`:`<a class="pgb ${c}" href="${h(n)}">${txt}</a>`;
 return{items,html:`<nav class="pgn" aria-label="Pages"><div class="pgn-i">Page <b>${p}</b> of ${pc} · ${t} posts</div><div class="pgn-p"><i style="width:${Math.round(p/pc*100)}%"></i></div><div class="pgn-b">${b(1,PGI.f+"First",p===1,"")}${b(p-1,PGI.b+"Back",p===1,"")}${b(p+1,"Next"+PGI.n,p===pc,"nx")}${b(pc,"Last"+PGI.l,p===pc,"")}</div></nav>`}}
+/* ===== desktop home: modern layout (phones keep the full-screen feed) ===== */
+const isD=()=>matchMedia("(min-width:721px)").matches;
+let DN=12;
+const dcover=(i,big)=>{const x=i.x;return`<div class="dcv${big?" big":""}" style="--cc:${cc(x.cat)[0]}"><div class="xpo"><i class="xic">${cic(x.cat)}</i></div>${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="xcat"><i></i>${esc(x.cat)}</span>${i.k==="a"?"":`<span class="dkd">Discussion</span>`}</div>`};
+const dacts=(i)=>{const A=i.k==="a",x=i.x,m=me(),on=m&&x.likes.includes(m.id),sv=m&&x.saves.includes(m.id),n=A?x.comments.length:x.replies.length;
+return`<button class="${on?"on":""}" onclick="${A?"likeA":"likeD"}('${x.id}')" aria-label="Like">${I("heart",17)}<b>${x.likes.length}</b></button><button onclick="cmOpen('${i.k}','${x.id}')" aria-label="Comments">${I("chat",17)}<b>${n}</b></button><button class="${sv?"on":""}" onclick="${A?"saveA":"saveD"}('${x.id}')" aria-label="Save">${I("bookmark",17)}</button>`};
+const dparts=i=>{const A=i.k==="a",x=i.x,uid=A?x.author:x.uid;return{A,x,uid,u:U(uid),href:"#/"+(A?"article/":"disc/")+x.id,body:A?mdText(x.body):String(x.body||"")}};
+function dcard(i){const{A,x,uid,u,href,body}=dparts(i);
+return`<article class="dc"><a class="dca" href="${href}" aria-label="${esc(x.title)}"></a>${dcover(i)}<div class="dcb"><h3>${esc(x.title)}</h3><p>${esc(cutw(body,150))}</p></div><div class="dcf"><span class="dcu">${av(uid,26)}<span class="xn">${esc(u.name)}</span>${vb(u)}<em>· ${ago(x.date)}</em></span><span class="dcs">${dacts(i)}</span></div></article>`}
+function dhero(i){const{A,x,uid,u,href,body}=dparts(i);
+return`<article class="dh-hero"><a class="dca" href="${href}" aria-label="${esc(x.title)}"></a>${dcover(i,1)}<div class="dhr"><span class="dhf">Featured</span><h2>${esc(x.title)}</h2><p>${esc(cutw(body,280))}</p><div class="dhu">${av(uid,40)}<span><b>${esc(u.name)}${vb(u)}</b><small>${ago(x.date)} ago${A?" \u00b7 "+rt(x.body)+" min read":""}</small></span></div><div class="dhs"><span class="dcs">${dacts(i)}</span><span class="dhe">${I("eye",17)} ${kf(x.views||0)}</span><span class="dhgo">${A?"Read article":"Join in"} \u2192</span></div></div></article>`}
+function homeD(){const l=fitemsB(120),m=me();FL=l;
+const E={fl:m?"Follow people to see their posts here.":"Log in to see posts from people you follow.",ar:"No articles yet.",tn:"No tech news yet.",cm:"No discussions yet.",fy:"Nothing here yet."},
+cnt=c=>pub().filter(a=>catsOf(a).includes(c)).length+db.discs.filter(d=>catsOf(d).includes(c)).length,
+tabs=[["ar","Articles"],["tn","Tech News"],["fl","Following"],["fy","For You"]],first=l[0],rest=l.slice(1,DN+1);
+return`<div class="dh"><div class="dh-top"><div class="dh-tabs">${tabs.map(([k,t])=>`<button class="${fv===k?"on":""}" onclick="fset('${k}')">${t}</button>`).join("")}</div></div><div class="dh-wrap"><div class="dh-main">${first?dhero(first)+`<div class="dh-grid" id="dhg">${rest.map(dcard).join("")}</div>${l.length>DN+1?`<button class="dh-more" id="dhm" onclick="dhMore()">Load more</button>`:""}`:`<div class="empty"><b>${E[fv]}</b>${fv==="fl"?`<br><a class="btn" href="${m?"#/search":"#/login"}">${m?"Find people":"Log in"}</a>`:""}</div>`}</div><aside class="dh-side"><h4>Browse topics</h4>${CATS.map(c=>`<a href="#/explore?c=${encodeURIComponent(c)}"><i style="background:${cc(c)[0]}"></i><span>${esc(c)}</span><em>${cnt(c)}</em></a>`).join("")}</aside></div></div>`}
+function dhMore(){const g=$("#dhg");if(!g)return;const st=g.children.length+1;DN+=12;g.insertAdjacentHTML("beforeend",FL.slice(st,DN+1).map(dcard).join(""));if(FL.length<=DN+1){const b=$("#dhm");if(b)b.remove()}}
+matchMedia("(min-width:721px)").addEventListener("change",()=>{const h=(location.hash||"#/").slice(2).split("?")[0].split("/")[0];if(!h||h==="home"||h==="following"){try{route()}catch(e){}}});
 const R={
-home(){const l=fitems(),m=me();FL=l;const E={fl:m?"Follow people to see their posts here.":"Log in to see posts from people you follow.",ar:"No articles yet.",tn:"No tech news yet.",cm:"No discussions yet.",fy:"Nothing here yet."};
+home(){if(isD())return homeD();const l=fitems(),m=me();FL=l;const E={fl:m?"Follow people to see their posts here.":"Log in to see posts from people you follow.",ar:"No articles yet.",tn:"No tech news yet.",cm:"No discussions yet.",fy:"Nothing here yet."};
 return`<div class="fw"><div class="ftabs"><button class="fmb" onclick="menu()" aria-label="Menu">${I("menu",26)}</button><div class="ftt">${[["ar","Articles"],["tn","Tech News"],["fl","Following"],["fy","For You"]].map(([k,t])=>`<button class="${fv===k?"on":""}" onclick="fset('${k}')">${t}</button>`).join("")}</div><a href="#/search" aria-label="Search">${I("search",26)}</a></div>
 <div class="feed" id="feed">${l.slice(0,FN).map(fslide).join("")||`<section class="fs"><div class="fe2"><b>${E[fv]}</b>${fv==="fl"?`<a class="btn" href="${m?"#/search":"#/login"}">${m?"Find people":"Log in"}</a>`:""}</div></section>`}</div></div>`},
 articles(q){const c=q.get("c")||"",s=(q.get("s")||"").toLowerCase(),o=q.get("o")||S().sort;
@@ -1702,7 +1768,7 @@ function gate(){return`<div class="empty"><h2>Please log in</h2><p>You need an a
 let wasHome=0;
 function route(){const [p,qs]=(location.hash||"#/").slice(2).split("?"),[n,id]=p.split("/"),q=new URLSearchParams(qs||"");
 if(n!=="search"&&n!=="people")sq.v="";
-{const hn=!n||n==="home"||n==="following";if(hn&&!wasHome)FN=8;wasHome=hn}document.body.classList.toggle("fm",!n||n==="home"||n==="following");document.body.classList.toggle("ppf",n==="profile");document.body.classList.toggle("auf",["login","signup","forgot"].includes(n));document.body.classList.toggle("epf",n==="editprofile"||n==="findpeople"||n==="viewers"||n==="edit");
+{const hn=!n||n==="home"||n==="following";if(hn&&!wasHome){FN=8;DN=12}wasHome=hn}document.body.classList.toggle("fm",(!n||n==="home"||n==="following")&&!isD());document.body.classList.toggle("ppf",n==="profile");document.body.classList.toggle("auf",["login","signup","forgot"].includes(n));document.body.classList.toggle("epf",n==="editprofile"||n==="findpeople"||n==="viewers"||n==="edit");
 if(S().maint&&!staff()&&n!=="login"){$("#app").innerHTML=`<div class="empty"><h2>We will be back soon</h2><p>${esc(S().name)} is under maintenance.</p><a class="btn" href="#/login">Staff login</a></div>`;chrome();return}
 let f=R[n||"home"];try{$("#app").innerHTML=f?f(["articles","community","explore"].includes(n)?q:id):nf();if(n==="edit")aeInit();rpBar(n==="article")}catch(e){$("#app").innerHTML=`<div class="empty">Something went wrong: ${esc(e.message)}</div>`}
 chrome();menu(0);scrollTo(0,0);countUp();if(n==="search")setTimeout(()=>{const i=$("#sqi");i&&i.focus()},0);const ms=$("#ms");if(ms)ms.scrollTop=ms.scrollHeight;splashDone()}
