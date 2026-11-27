@@ -8,6 +8,7 @@ export default {
   async fetch(request, env) {
     try {
       const url = new URL(request.url);
+      if (url.pathname === "/api/geo") { const cf = request.cf || {}; return new Response(JSON.stringify({ country: cf.country || "", city: cf.city || "", region: cf.region || "" }), { headers: { "content-type": "application/json", "cache-control": "no-store" } }); }
       const im = url.pathname.match(/^\/i\/([ad])\/([0-9a-fA-F-]{8,40})$/);
       const m = im || url.pathname.match(/^\/([ad])\/([0-9a-fA-F-]{8,40})\/?$/);
       if (!m) return env.ASSETS.fetch(request);
