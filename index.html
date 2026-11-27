@@ -866,7 +866,7 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .tck{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:var(--ac);color:var(--on);display:none;place-items:center}
 .tpt.on .tck{display:grid}
 #tpl{padding:.2rem 1rem .6rem}
-</style>
+.mp a,.mp .dr{min-height:54px;padding:0 1.1rem;gap:.9rem;box-sizing:border-box;align-items:center}.mp a .ic:last-child,.mp .dr>.ic:last-child{margin-right:-.3rem;flex:none}.mp .mseg{margin:0;flex:none;padding:3px;gap:2px}.mp .mseg button{width:38px;height:30px;color:var(--mu);transition:background .15s,color .15s}.mp .mseg button svg,.mp .mseg button .ic{color:inherit!important}.mp .mseg button.on,.mp .mseg button.on:hover{background:var(--ac);color:#fff}.mp .mseg button.on svg{stroke:#fff}.mp .mps{padding:1.1rem 1.1rem .35rem}.mp .mps1{padding:0 4rem .4rem 1.1rem}.mp .mph{margin:.4rem 1.1rem}</style>
 </head>
 <body>
 <script>if(/^#\/(article|disc)\//.test(location.hash))document.documentElement.classList.add("nosp")</script>
@@ -1037,7 +1037,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.60";
+const APP_VERSION="5.1.61";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
