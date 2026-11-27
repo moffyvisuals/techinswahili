@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html lang="sw" translate="no">
 <head>
 <meta charset="utf-8">
+<meta name="google" content="notranslate">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tech In Swahili</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -1024,7 +1025,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.56";
+const APP_VERSION="5.1.57";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1350,10 +1351,12 @@ function aCard(a){return`<a class="card ac" href="#/article/${a.id}">${cover(a.c
 function dCard(d){const u=U(d.uid),m=me();return`<article class="fd"><div class="row"><a href="#/profile/${d.uid}" class="row" style="gap:.6rem;flex-wrap:nowrap">${av(d.uid,42)}<span><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${ago(d.date)}</span></span></a><span style="margin-left:auto">${d.pinned?"📌 ":""}${d.locked?"🔒 ":""}${catTag(d.cats||d.cat)}</span></div><a href="#/disc/${d.id}" class="fb"><h3>${esc(d.title)}</h3><p>${esc(d.body.slice(0,160))}${d.body.length>160?"…":""}</p>${car(d.imgs)}</a><div class="row"><button class="g sm ${m&&d.likes.includes(m.id)?"on":""}" onclick="likeD('${d.id}')">♥ ${d.likes.length}</button><button class="g sm" onclick="location.hash='#/disc/${d.id}'">💬 ${d.replies.length}</button><button class="g sm" onclick="wa('${d.id}','disc')">WhatsApp</button><span class="meta" style="margin-left:auto">${d.views} views</span></div></article>`}
 const pub=()=>db.articles.filter(a=>a.status==="published");
 let fv="fy",lt=0,ltid="",FN=8,FL=[];
-const fset=t=>{fv=t;FN=8;DN=12;route()};
+const fset=t=>{fv=t;FN=8;DN=12;delete FOR[t];route()};
 document.addEventListener("scroll",ev=>{const f=ev.target;if(!f||f.id!=="feed"||FL.length<=FN)return;if(f.scrollTop+f.clientHeight*2.5>=f.scrollHeight){const nx=FL.slice(FN,FN+8).map(fslide).join("");FN+=8;f.insertAdjacentHTML("beforeend",nx)}},true);
-let SHK=null;
-function fitems(){const l=fitemsB(120);if(!SHK)return l.slice(0,40);l.forEach(i=>{if(!SHK.has(i.x.id))SHK.set(i.x.id,Math.random())});return l.sort((p,q)=>SHK.get(p.x.id)-SHK.get(q.x.id)).slice(0,40)}
+let SHK=null,FOR={};
+/* keep the order we first showed: live data (views, likes) must not reshuffle posts under the reader */
+function fstab(l){const key=i=>i.k+":"+i.x.id,o=FOR[fv];if(o){const pos=new Map(o.map((k,n)=>[k,n]));l=l.map((i,n)=>[i,n]).sort((p,q)=>(pos.has(key(p[0]))?pos.get(key(p[0])):1e6+p[1])-(pos.has(key(q[0]))?pos.get(key(q[0])):1e6+q[1])).map(p=>p[0])}FOR[fv]=l.map(key);return l}
+function fitems(){let l=fitemsB(120);if(SHK){l.forEach(i=>{if(!SHK.has(i.x.id))SHK.set(i.x.id,Math.random())});l.sort((p,q)=>SHK.get(p.x.id)-SHK.get(q.x.id))}return fstab(l.slice(0,40))}
 function fitemsB(N){const m=me(),a=pub().map(x=>({k:"a",x})),d=db.discs.map(x=>({k:"d",x}));let l=fv==="ar"?a:fv==="tn"?a.filter(i=>catsOf(i.x).includes("Tech News")):fv==="cm"?d:[...a,...d];
 if(fv==="fl"){const fo=m?db.users.filter(u=>(u.followers||[]).includes(m.id)).map(u=>u.id):[];l=l.filter(i=>fo.includes(i.k==="a"?i.x.author:i.x.uid))}
 if(fv==="fy"){const tp=lsGet("tis-topics",[]).map(nc),sc=i=>{const x=i.x,n=x.likes.length+(i.k==="a"?x.comments.length:x.replies.length)*2,age=(Date.now()-new Date(x.date))/864e5;return(catsOf(x).some(k=>tp.includes(k))?50:0)+n*3+(x.views||0)/20-age*.8};return l.sort((p,q)=>sc(q)-sc(p)).slice(0,N||40)}
@@ -1390,7 +1393,7 @@ function dcard(i){const{A,x,uid,u,href,body}=dparts(i);
 return`<article class="dc"><a class="dca" href="${href}" aria-label="${esc(x.title)}"></a>${dcover(i)}<div class="dcb"><h3>${esc(x.title)}</h3><p>${esc(cutw(body,150))}</p></div><div class="dcf"><span class="dcu">${av(uid,26)}<span class="xn">${esc(u.name)}</span>${vb(u)}<em>· ${ago(x.date)}</em></span><span class="dcs">${dacts(i)}</span></div></article>`}
 function dhero(i){const{A,x,uid,u,href,body}=dparts(i);
 return`<article class="dh-hero"><a class="dca" href="${href}" aria-label="${esc(x.title)}"></a>${dcover(i,1)}<div class="dhr"><span class="dhf">Featured</span><h2>${esc(x.title)}</h2><p>${esc(cutw(body,280))}</p><div class="dhu">${av(uid,40)}<span><b>${esc(u.name)}${vb(u)}</b><small>${ago(x.date)} ago${A?" \u00b7 "+rt(x.body)+" min read":""}</small></span></div><div class="dhs"><span class="dcs">${dacts(i)}</span><span class="dhe">${I("eye",17)} ${kf(x.views||0)}</span><span class="dhgo">${A?"Read article":"Join in"} \u2192</span></div></div></article>`}
-function homeD(){const l=fitemsB(120),m=me();FL=l;
+function homeD(){const l=fstab(fitemsB(120)),m=me();FL=l;
 const E={fl:m?"Follow people to see their posts here.":"Log in to see posts from people you follow.",ar:"No articles yet.",tn:"No tech news yet.",cm:"No discussions yet.",fy:"Nothing here yet."},
 cnt=c=>pub().filter(a=>catsOf(a).includes(c)).length+db.discs.filter(d=>catsOf(d).includes(c)).length,
 tabs=[["ar","Articles"],["tn","Tech News"],["fl","Following"],["fy","For You"]],first=l[0],rest=l.slice(1,DN+1);
@@ -1923,7 +1926,7 @@ const rst=()=>{pe.style.transition="transform .25s,opacity .25s";pe.style.opacit
 addEventListener("touchstart",e=>{on=0;dy=0;if(busy||!okp()||cs||e.touches.length!==1||!top()||inner(e.target)||(e.target.closest&&e.target.closest("input,textarea,select,.car,.cart,#ms")))return;y0=e.touches[0].clientY;x0=e.touches[0].clientX;on=1},{passive:true});
 addEventListener("touchmove",e=>{if(!on)return;if(Math.abs(e.touches[0].clientX-x0)>Math.abs(e.touches[0].clientY-y0)&&dy<=0){on=0;return}dy=e.touches[0].clientY-y0;if(dy>0&&top()){if(e.cancelable)e.preventDefault();pos(dy*.55)}else if(dy<=0){on=0;rst()}},{passive:false});
 const run=async()=>{busy=1;pe.style.opacity=1;pe.style.transition="transform .2s";pe.style.transform="translateY("+(T/2)+"px)";pe.classList.add("go");try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}
-if(["","home"].includes((location.hash||"#/").slice(2).split("?")[0].split("/")[0]))SHK=new Map;
+if(["","home"].includes((location.hash||"#/").slice(2).split("?")[0].split("/")[0]))SHK=new Map;FOR={};
 document.documentElement.style.removeProperty("--az");
 if(document.body.classList.contains("fm")&&!cs)route();
 const s0=dsig();loadAll().catch(()=>{}).then(()=>{if(dsig()!==s0&&okp()&&!cs)try{rerender()}catch(e){}});
