@@ -667,6 +667,17 @@ header .mb{margin-right:-.4rem}
 .fpk .cgrid .pko.on .ce{background:color-mix(in srgb,var(--ac) 24%,transparent)}
 .fpk .cgrid.cg1{grid-template-columns:1fr}.fpk .cgrid.cg1 .pko:last-child:nth-child(odd){grid-column:auto}
 .fpk .cgrid .pko{font-size:.9rem}
+/* v5.1.66 category icons + filter sheet fit */
+.ce svg,.sge svg,.tpt i svg,.tag svg,.chn svg,.chz i svg{display:inline-block;flex:none;stroke-width:2}
+.fpk .cgrid .pko .ce svg{width:22px;height:22px}
+.tpt i svg{width:19px;height:19px;color:#fff}
+.tag svg{width:.95em;height:.95em;vertical-align:-.16em;margin-right:.15em}
+.chn svg,.chz i svg{width:1.05em;height:1.05em;vertical-align:-.17em;margin-right:.15em}
+.sge svg{width:1.1em;height:1.1em;vertical-align:-.15em}
+.cxb.fpk{height:auto;max-height:min(88vh,calc(var(--vvh,100vh) - 56px))}
+.fpk .cgrid{padding-bottom:calc(1.6rem + env(safe-area-inset-bottom,0px))}
+.fpk .cgrid:not(.cg1) .pko:last-child:nth-child(odd){grid-column:auto}
+.fpk .cgrid .pko.on .ce{color:var(--ac)}
 @media(max-width:360px){.fpk .cgrid{grid-template-columns:1fr}}
 /* no text selection, long-press menus or image dragging (typing fields stay normal) */
 html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -1049,7 +1060,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max,ctx){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||(ctx==="top"?sem("u","No people found","","sm"):ctx==="tab"?sem("u","No one found"+(t?` for “${esc(v.trim())}”`:""),"Try a name or an @username."):`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`)}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.65";
+const APP_VERSION="5.1.66";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1100,11 +1111,11 @@ const shh=(t,k,n,sh)=>`<div class="shh"><h3 class="sht">${t}</h3>${n>sh?`<button
 const arow=a=>`<a class="ar" href="#/article/${a.id}"><div class="th">${a.img?`<img src="${esc(a.img)}" alt="" loading="lazy">`:art(a.cat)}</div><div style="min-width:0"><b class="ui">${esc(a.title)}</b><span class="meta" style="display:block">${esc(a.cat)} · ♥ ${a.likes.length} · ${a.views} views</span></div></a>`,
 drow=d=>`<a class="ar" href="#/disc/${d.id}"><div class="th">${d.img?`<img src="${esc(d.img)}" alt="" loading="lazy">`:art(d.cat)}</div><div style="min-width:0"><b class="ui">${esc(d.title)}</b><span class="meta" style="display:block">${esc(U(d.uid).name)} · ♥ ${d.likes.length} · ${d.replies.length} replies</span></div></a>`;
 function sres(){const t=sq.v.trim().toLowerCase();
-if(!t){const l=rsr();return(l.length?`<h3 class="sht">Recent searches</h3>`+l.map((x,i)=>`<div class="rs"><a href="#/search" onclick="sset(rsr()[${i}]);return false">${I("clock",20)}<span>${esc(x)}</span></a><button aria-label="Remove" onclick="sdel(rsr()[${i}])">${I("x",18)}</button></div>`).join(""):"")+`<h3 class="sht">Explore topics</h3><div class="tpg">${CATS.map(c=>`<button class="tpt" onclick="sset('${esc(c)}')"><i style="background:${cc(c)[0]}">${cc(c)[1]}</i><span>${esc(c)}</span></button>`).join("")}</div>`}
+if(!t){const l=rsr();return(l.length?`<h3 class="sht">Recent searches</h3>`+l.map((x,i)=>`<div class="rs"><a href="#/search" onclick="sset(rsr()[${i}]);return false">${I("clock",20)}<span>${esc(x)}</span></a><button aria-label="Remove" onclick="sdel(rsr()[${i}])">${I("x",18)}</button></div>`).join(""):"")+`<h3 class="sht">Explore topics</h3><div class="tpg">${CATS.map(c=>`<button class="tpt" onclick="sset('${esc(c)}')"><i style="background:${cc(c)[0]}">${cic(c)}</i><span>${esc(c)}</span></button>`).join("")}</div>`}
 const us=plist(sq.v,sq.t==="top"?3:60,sq.t==="top"?"top":"tab"),ar=pub().filter(a=>(a.title+" "+a.body+" "+catsOf(a).join(" ")).toLowerCase().includes(t)),ds=db.discs.filter(d=>(d.title+" "+d.body+" "+catsOf(d).join(" ")).toLowerCase().includes(t)),
 A=(n,c)=>ar.slice(0,n).map(arow).join("")||sem("a","No articles found",c?"":"Try a different word or a shorter search.",c),D=(n,c)=>ds.slice(0,n).map(drow).join("")||sem("d","No discussions found",c?"":"Try a different word or a shorter search.",c);
 if(sq.t==="users")return us;if(sq.t==="articles")return A(50);if(sq.t==="disc")return D(50);
-const uc=ucount(sq.v);if(!uc&&!ar.length&&!ds.length)return sem("s",`No results for “${esc(sq.v.trim())}”`,"Check the spelling or try fewer words. Or explore a topic:","lg")+`<div class="tpg">${CATS.map(c=>`<button class="tpt" onclick="sset('${esc(c)}')"><i style="background:${cc(c)[0]}">${cc(c)[1]}</i><span>${esc(c)}</span></button>`).join("")}</div>`;
+const uc=ucount(sq.v);if(!uc&&!ar.length&&!ds.length)return sem("s",`No results for “${esc(sq.v.trim())}”`,"Check the spelling or try fewer words. Or explore a topic:","lg")+`<div class="tpg">${CATS.map(c=>`<button class="tpt" onclick="sset('${esc(c)}')"><i style="background:${cc(c)[0]}">${cic(c)}</i><span>${esc(c)}</span></button>`).join("")}</div>`;
 return shh("Users","users",uc,3)+us+shh("Articles","articles",ar.length,3)+A(3,"sm")+shh("Discussions","disc",ds.length,3)+D(3,"sm")}
 function stabs(){return sq.v.trim()?`<div class="pf-tabs" role="tablist">${[["top","Top"],["users","Users"],["articles","Articles"],["disc","Discussions"]].map(([k,l])=>`<button role="tab" aria-selected="${sq.t===k}" class="${sq.t===k?"on":""}" onclick="stab('${k}')">${l}</button>`).join("")}</div>`:""}
 function sfind(v){sq.v=v;$("#stabs").innerHTML=stabs();$("#sres").innerHTML=sres()}
@@ -1374,7 +1385,8 @@ const CIC={"General Tech":'<rect x="3" y="4.5" width="18" height="12" rx="2"/><p
 "Computer Hardware":'<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/>',
 "Mobile Tech":'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
 "Tech Careers":'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>',
-"Ask the Community":'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/>'};
+"Ask the Community":'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/>',
+"All":'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 3v4M17 5h4M5 17v4M3 19h4"/>'};
 const cic=c=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${CIC[c]||CIC["General Tech"]}</svg>`;
 const CC={"General Tech":["#455a64","💻"],"Tech News":["#1565c0","📰"],"Gadgets & Reviews":["#5e35b1","🎧"],"Tips & Tutorials":["#e08a00","💡"],"Networking":["#0277bd","🌐"],"Programming":["#3b7d23","⌨️"],"Cybersecurity":["#c62828","🛡️"],"Artificial Intelligence":["#7c4dff","🤖"],"Computer Hardware":["#d84315","🔧"],"Mobile Tech":["#00796b","📱"],"Tech Careers":["#6d4c41","🎓"],"Ask the Community":["#ad1457","💬"]};
 const cc=c=>CC[c]||["#455a64","💡"];
@@ -1403,7 +1415,7 @@ function countUp(){const rm=matchMedia("(prefers-reduced-motion:reduce)").matche
 const els=[...document.querySelectorAll("[data-count]")].filter(e=>+e.dataset.count>0);if(rm)return;
 if(window.IntersectionObserver){const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){run(x.target);io.unobserve(x.target)}}));els.forEach(e=>io.observe(e))}else els.forEach(run)}
 const rel=a=>{const r=pub().filter(x=>catsOf(x).some(k=>catsOf(a).includes(k))&&x.id!==a.id).slice(0,3);return r.length?`<h2 style="margin-top:2.5rem">Related articles</h2><div class="grid">${r.map(aCard).join("")}</div>`:""};
-const catTag=v=>(Array.isArray(v)?v:CL(v)).slice(0,CATMAX).map(c=>`<span class="tag" style="background:${cc(c)[0]};color:#fff">${cc(c)[1]} ${esc(c)}</span>`).join("");
+const catTag=v=>(Array.isArray(v)?v:CL(v)).slice(0,CATMAX).map(c=>`<span class="tag" style="background:${cc(c)[0]};color:#fff">${cic(c)} ${esc(c)}</span>`).join("");
 function chrome(){document.querySelectorAll('img.lg').forEach(i=>i.src=L());document.querySelector('link[rel=icon]').href=L();
 const s=S(),nw=s.name.split(" "),lw=nw.pop();$("#sn").innerHTML=esc(nw.join(" "))+(nw.length?" ":"")+"<b>"+esc(lw)+"</b>";document.title=s.name;
 $("#bn").innerHTML=(OFF?`<div class="bnr off"><span>You are offline. Showing saved content.</span></div>`:"")+(s.bannerOn&&s.banner&&lsGet("tis-bn","")!==(s.bannerId||s.banner)?`<div class="bnr"><span>${esc(s.banner)}</span><button onclick="bnX()" aria-label="Dismiss">${I("x",16)}</button></div>`:"");
@@ -1492,7 +1504,7 @@ articles(q){const c=q.get("c")||"",s=(q.get("s")||"").toLowerCase(),o=q.get("o")
 let l=pub().filter(a=>(!c||catsOf(a).includes(c))&&(!s||(a.title+a.body).toLowerCase().includes(s)));
 l.sort(o==="pop"?(a,b)=>b.likes.length-a.likes.length:(a,b)=>b.date.localeCompare(a.date));
 const P=pgn(l,q,"articles");return`<h1>Articles</h1>${fbar("Search articles",s,c,o,[["new","Latest"],["pop","Most liked"]])}
-<div class="grid">${P.items.map(aCard).join("")||'<div class="empty">No articles match. Try another word or clear the filters.</div>'}</div>${P.html}`},
+<div class="grid">${P.items.map(aCard).join("")||`<div class="empty pf-empty"><div class="pe-ic">${I("search",30)}</div><b>No articles found</b><span>Try another word${s||c?" or clear the filters":""}.</span>${s||c?'<button type="button" class="btn" onclick="clrF()">Clear filters</button>':""}</div>`}</div>${P.html}`},
 article(id){const a=db.articles.find(x=>x.id===id);if(!a)return nf();bump("article",id,a);const u=me();
 const top=a.comments.filter(c=>!c.p).sort((x,y)=>y.likes.length-x.likes.length||y.date.localeCompare(x.date));
 const cm=(c,r)=>`<div class="cm ${r?"rp":""}">${ulink(c.uid,av(c.uid,24)+" <b class=\"ui\">@"+esc(U(c.uid).user)+"</b>"+vb(U(c.uid)))} <span class="meta">${fd(c.date)}</span><p>${rich(c.text)}</p>${c.img?`<img class="pi" src="${esc(c.img)}" alt="" loading="lazy">`:""}<div class="row"><button class="g sm" onclick="likeC('${a.id}','${c.id}')">♥ ${c.likes.length}</button>${r?"":`<button class="g sm" onclick="reply('${a.id}','${c.id}')">Reply</button>`}<button class="g sm" onclick="rep('comment','${c.id}')">Report</button>${u&&(u.id===c.uid||staff())?`<button class="g sm d" onclick="delC('${a.id}','${c.id}')">Delete</button>`:""}</div>${a.comments.filter(x=>x.p===c.id).map(x=>cm(x,1)).join("")}</div>`;
@@ -1699,11 +1711,11 @@ function aeImg(el){const f=el.files[0];if(!f)return;$("#aepv").innerHTML=`<img s
 function aeUrl(v){if(/^https:\/\//.test(v.trim()))$("#aepv").innerHTML=`<img src="${esc(v.trim())}" alt="" onerror="this.remove()">`}
 function aeTab(n){if(n)aeIn();$("#aeW").hidden=!!n;$("#aeP").hidden=!n;$("#aew").classList.toggle("on",!n);$("#aep").classList.toggle("on",!!n);
 if(n){const im=$("#aepv img");$("#aeP").innerHTML=`<h1>${esc($("#t").value||"Untitled")}</h1><p class="meta">${esc($("#c").value)}</p>${im?`<img class="cv" src="${esc(im.src)}" alt="">`:""}${$("#b").value.trim()?`<div class="abody">${md($("#b").value)}</div>`:'<p class="meta">Nothing to preview yet.</p>'}`}}
-const catLblPlain=L=>{const f=L[0]||CATS[0];return cc(f)[1]+" "+f+(L.length>1?" +"+(L.length-1):"")};
-const catChipIn=L=>{const f=L[0]||CATS[0];return`<span class="chs"><span class="chn">${cc(f)[1]} ${esc(f)}</span>${L.length>1?`<em class="chb">+${L.length-1}</em>`:""}</span><span class="chz" aria-hidden="true">${CATS.map(c=>`<i>${cc(c)[1]} ${esc(c)}</i>`).join("")}</span>`};
+const catLblPlain=L=>{const f=L[0]||CATS[0];return f+(L.length>1?" +"+(L.length-1):"")};
+const catChipIn=L=>{const f=L[0]||CATS[0];return`<span class="chs"><span class="chn">${cic(f)} ${esc(f)}</span>${L.length>1?`<em class="chb">+${L.length-1}</em>`:""}</span><span class="chz" aria-hidden="true">${CATS.map(c=>`<i>${cic(c)} ${esc(c)}</i>`).join("")}</span>`};
 function aeLbl(){const L=CL($("#c").value),e=$("#aecl");if(!e)return;if(e.classList.contains("chp"))e.innerHTML=catChipIn(L);else e.textContent=catLblPlain(L)}
 function aeCat(){pkClose(1);const sel=CL($("#c").value),e=document.createElement("div");e.id="pk";e.className="cxs";e.onclick=ev=>{if(ev.target===e)pkClose()};
-e.innerHTML=`<div class="cxb cxa" role="dialog" aria-modal="true" aria-label="Categories"><div class="cxg"></div><div class="cxh"><b>Choose categories</b><button type="button" onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><p class="cgs">Pick up to ${CATMAX}. The first one is the main category.</p><div class="cxl pkl cgrid">${CATS.map((x,i)=>`<button type="button" class="pko${sel.includes(x)?" on":""}" data-i="${i}" onclick="aeSetCat(${i})"><span class="ce">${cc(x)[1]}</span><span class="cn">${esc(x)}</span>${I("chk",18)}</button>`).join("")}</div><div class="cgf"><button type="button" class="cgd" onclick="pkClose()">Done</button></div></div>`;
+e.innerHTML=`<div class="cxb cxa" role="dialog" aria-modal="true" aria-label="Categories"><div class="cxg"></div><div class="cxh"><b>Choose categories</b><button type="button" onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><p class="cgs">Pick up to ${CATMAX}. The first one is the main category.</p><div class="cxl pkl cgrid">${CATS.map((x,i)=>`<button type="button" class="pko${sel.includes(x)?" on":""}" data-i="${i}" onclick="aeSetCat(${i})"><span class="ce">${cic(x)}</span><span class="cn">${esc(x)}</span>${I("chk",18)}</button>`).join("")}</div><div class="cgf"><button type="button" class="cgd" onclick="pkClose()">Done</button></div></div>`;
 document.body.appendChild(e);document.body.style.overflow="hidden"}
 function aeSetCat(i){const c=CATS[i];let L=CL($("#c").value);
 if(L.includes(c)){if(L.length===1){toast("Keep at least one category");return}L=L.filter(x=>x!==c)}
@@ -1807,7 +1819,7 @@ function bnX(){lsSet("tis-bn",S().bannerId||S().banner);chrome()}
 let OFF=0;
 function topicsOpen(){pkClose(1);const sel=new Set(lsGet("tis-topics",[]).map(nc)),e=document.createElement("div");e.id="pk";e.className="cxs";e.onclick=x=>{if(x.target===e)pkClose()};
 const CK='<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7"/></svg>';
-const draw=()=>{$("#tpl").innerHTML='<div class="tpg">'+CATS.map((c,i)=>`<button type="button" class="tpt${sel.has(c)?" on":""}" aria-pressed="${sel.has(c)}" onclick="tpT(${i})"><i style="background:${cc(c)[0]}">${cc(c)[1]}</i><span>${esc(c)}</span><b class="tck">${CK}</b></button>`).join("")+'</div>';const n=$("#tpn");if(n)n.textContent=sel.size?"Save ("+sel.size+")":"Save";const h=$("#tph");if(h)h.textContent=sel.size?sel.size+" selected":"None selected"};
+const draw=()=>{$("#tpl").innerHTML='<div class="tpg">'+CATS.map((c,i)=>`<button type="button" class="tpt${sel.has(c)?" on":""}" aria-pressed="${sel.has(c)}" onclick="tpT(${i})"><i style="background:${cc(c)[0]}">${cic(c)}</i><span>${esc(c)}</span><b class="tck">${CK}</b></button>`).join("")+'</div>';const n=$("#tpn");if(n)n.textContent=sel.size?"Save ("+sel.size+")":"Save";const h=$("#tph");if(h)h.textContent=sel.size?sel.size+" selected":"None selected"};
 window.tpT=i=>{const c=CATS[i];sel.has(c)?sel.delete(c):sel.add(c);draw()};window.tpS=()=>{lsSet("tis-topics",[...sel]);pkClose(1);toast("Your For You feed is updated");if(/^#\/?$/.test(location.hash)||location.hash==="")route()};
 e.innerHTML=`<div class="cxb" role="dialog" aria-modal="true" aria-label="Topics"><div class="cxg"></div><div class="cxh"><b>Topics for you</b><button type="button" onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><p class="meta tph">Pick the topics you like and we will show you more of them in For You. <b id="tph"></b></p><div class="cxl pkl" id="tpl"></div><div style="padding:.6rem 1rem 1.2rem"><button class="aub" id="tpn" style="width:100%" onclick="tpS()">Save</button></div></div>`;document.body.appendChild(e);document.body.style.overflow="hidden";draw()}
 async function notifOn(){if(!("Notification" in window))return toast("This browser does not support notifications");const r=await Notification.requestPermission();toast(r==="granted"?"Notifications are on":"Notifications are blocked in your browser settings")}
@@ -1877,10 +1889,11 @@ if(sc>=0)out.push({x,k,sc})});
 out.sort((a,b)=>a.sc-b.sc||(b.x.views||0)-(a.x.views||0));
 const esq=c=>c.replace(/[.*+?^${}()|[\]\\]/g,"\\$&"),re=new RegExp(q0.replace(/[^a-zA-Z0-9]+/g,"").split("").map(esq).join("[^a-zA-Z0-9]*"),"i"),
 hl=t=>{const m=q0.replace(/[^a-zA-Z0-9]+/g,"")?re.exec(t):null;return m?esc(t.slice(0,m.index))+"<mark>"+esc(m[0])+"</mark>"+esc(t.slice(m.index+m[0].length)):esc(t)};
-const rows=out.slice(0,6).map(({x,k})=>`<a class="sg" role="option" href="#/${k}/${x.id}" onmousedown="event.preventDefault()"><span class="sge">${cc(x.cat)[1]}</span><span class="sgt">${hl(x.title||"")}</span><span class="sgk">${esc((x.cat||"").replace(/^(.{14}).+$/,"$1…"))}</span></a>`).join("");
+const rows=out.slice(0,6).map(({x,k})=>`<a class="sg" role="option" href="#/${k}/${x.id}" onmousedown="event.preventDefault()"><span class="sge">${cic(x.cat)}</span><span class="sgt">${hl(x.title||"")}</span><span class="sgk">${esc((x.cat||"").replace(/^(.{14}).+$/,"$1…"))}</span></a>`).join("");
 box.innerHTML=rows+`<button type="button" class="sg all" onmousedown="event.preventDefault()" onclick="fsgHide();filt()">${I("search",18)}<span class="sgt">${out.length?"See all results for":"No title matches. Search all text for"} “${esc(q0)}”</span></button>`;box.hidden=false}
 function fpick(k){pkClose(1);const cv=$("#"+k).value,e=document.createElement("div");e.id="pk";e.className="cxs";e.onclick=ev=>{if(ev.target===e)pkClose()};
-const SI={new:"\u{1F552}",pop:"\u2764\uFE0F",liked:"\u2764\uFE0F",talk:"\u{1F4AC}",un:"\u2753"},cat=k==="c",em=(v,t)=>cat?(v?cc(v)[1]:"\u2728"):(SI[v]||"\u2022");
+const q9=d=>`<svg class="ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`,
+SI={new:I("clock",22),pop:I("heart",22),liked:I("heart",22),talk:I("chat",22),un:q9('<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6M12 17h.01"/>')},cat=k==="c",em=(v,t)=>cat?cic(v||"All"):(SI[v]||"\u2022");
 e.innerHTML=`<div class="cxb cxa fpk" role="dialog" aria-modal="true" aria-label="${fbo.t[k]}"><div class="cxg"></div><div class="cxh"><b>${fbo.t[k]}</b><button type="button" onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><p class="cgs">${cat?"Show only one topic":"Choose how the list is ordered"}</p><div class="cxl pkl cgrid${cat?"":" cg1"}">${fbo[k].map(([v,t],i)=>`<button type="button" class="pko${v===cv?" on":""}${cat&&!v?" all":""}" onclick="pkSet('${k}',${i})"><span class="ce">${em(v,t)}</span><span class="cn">${esc(t)}</span>${I("chk",18)}</button>`).join("")}</div></div>`;
 document.body.appendChild(e);document.body.style.overflow="hidden";pkDrag(e)}
 /* drag the handle or title down to close a sheet */
@@ -1895,6 +1908,7 @@ function rlOpen(id){pkClose(1);const u=U(id),e=document.createElement("div");e.i
 e.innerHTML=`<div class="cxb" role="dialog" aria-modal="true" aria-label="Change role"><div class="cxg"></div><div class="cxh"><b>Change role</b><button onclick="pkClose()" aria-label="Close">${I("x",22)}</button></div><p class="rlw">${av(id,34)}<span><b>${esc(u.name)}</b><small>@${esc(u.user)}</small></span></p><div class="cxl pkl">${RLS.map(([v,t,d,ic])=>`<button class="pko rlo${v===u.role?" on":""}" onclick="pkClose(1);setRole('${id}','${v}')"><em class="rli">${I(ic,20)}</em><span><b>${t}</b><small>${d}</small></span>${v===u.role?`<u class="rlk">${I("chk",24)}</u>`:""}</button>`).join("")}</div></div>`;
 document.body.appendChild(e);document.body.style.overflow="hidden"}
 function pkClose(q){const e=$("#pk");if(e){if(q)e.remove();else{e.classList.add("out");setTimeout(()=>e.remove(),200)}}document.body.style.overflow=""}
+function clrF(){const a=$("#s"),b=$("#c");if(a)a.value="";if(b)b.value="";filt()}
 function filt(){const q=new URLSearchParams({s:$("#s").value,c:$("#c").value,o:$("#o").value,f:$("#o").value});location.hash="#/"+location.hash.slice(2).split("?")[0]+"?"+q}
 const TQ={};
 async function toggle(arr,table,keys){if(!need())return;const uid=cur,on=tgl(arr,uid);pk2=/likes$/.test(table)?Object.values(keys)[0]:null;rerender();setTimeout(()=>{pk2=null},600);
