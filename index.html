@@ -678,6 +678,7 @@ header .mb{margin-right:-.4rem}
 .fpk .cgrid{padding-bottom:calc(1.6rem + env(safe-area-inset-bottom,0px))}
 .fpk .cgrid:not(.cg1) .pko:last-child:nth-child(odd){grid-column:auto}
 .fpk .cgrid .pko.on .ce{color:var(--ac)}
+.cgrid .pko .ce svg{display:block;color:var(--tx)}.cgrid .pko.on .ce svg{color:var(--ac)}
 @media(max-width:360px){.fpk .cgrid{grid-template-columns:1fr}}
 /* no text selection, long-press menus or image dragging (typing fields stay normal) */
 html,body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -1060,7 +1061,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max,ctx){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||(ctx==="top"?sem("u","No people found","","sm"):ctx==="tab"?sem("u","No one found"+(t?` for “${esc(v.trim())}”`:""),"Try a name or an @username."):`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`)}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.67";
+const APP_VERSION="5.1.68";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
