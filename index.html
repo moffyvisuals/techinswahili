@@ -780,6 +780,31 @@ img,svg,a{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
 .pht.busy{display:grid;place-items:center;color:var(--ac)}
 .phhint{display:flex;align-items:center;gap:.4rem;margin:-.15rem 0 .6rem .1rem;font-size:.8rem;color:var(--mu)}
 @media(hover:hover){.pht{cursor:grab}}
+
+/* ---- v5.1.55: modern Explore ---- */
+.xch{background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 44px),transparent)}
+.xch .xc{display:inline-flex!important;align-items:center;gap:.45rem;height:38px!important;line-height:1!important;padding:0 1rem!important;border-radius:999px!important;background:transparent!important;border:1px solid var(--bd)!important;font-weight:600!important;font-size:.9rem!important;white-space:nowrap;transition:background .15s,transform .1s}
+.xc i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--cd,var(--ac))}
+.xch .xc:hover{background:color-mix(in srgb,var(--tx) 7%,transparent)!important}.xc:active{transform:scale(.97)}
+.xch .xc.on{background:linear-gradient(135deg,var(--ac),color-mix(in srgb,var(--ac) 62%,#fff))!important;border-color:transparent!important;color:var(--on)!important}
+.xch .xc.on i{background:var(--on)}
+.xt{margin-bottom:18px;animation:xin .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0ms)}
+@keyframes xin{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.xv{border-radius:20px;border:1px solid #ffffff14;box-shadow:0 6px 22px #0000003d;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.xv>img{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+@media(hover:hover){.xt:hover .xv{transform:translateY(-4px);box-shadow:0 16px 40px #0000006b}.xt:hover .xv>img{transform:scale(1.05)}}
+.xv:after{inset:35% 0 0;background:linear-gradient(transparent,#000000b8)}
+.xpo{position:absolute;inset:0;background:radial-gradient(70% 50% at 12% 8%,color-mix(in oklab,var(--cc) 55%,#ff8ad8) 0,transparent 62%),radial-gradient(65% 50% at 95% 28%,color-mix(in oklab,var(--cc) 58%,#4fe3ff) 0,transparent 64%),linear-gradient(165deg,color-mix(in oklab,var(--cc) 90%,#fff),color-mix(in oklab,var(--cc) 50%,#000))}
+.xic{position:absolute;right:-12%;top:8%;width:78%;aspect-ratio:1;color:#fff;transform:rotate(-10deg);-webkit-mask-image:linear-gradient(200deg,#000 0,#0000 85%);mask-image:linear-gradient(200deg,#000 0,#0000 85%)}
+.xic svg{display:block;width:100%;height:100%;stroke-width:.6;opacity:.32;filter:drop-shadow(0 0 14px #ffffff40)}
+.xcat{position:absolute;left:10px;top:10px;z-index:2;display:inline-flex;align-items:center;gap:.4rem;max-width:calc(100% - 78px);padding:.28rem .6rem;border-radius:999px;background:#0000005c;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#fff;font:600 .7rem "Bricolage Grotesque",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xcat i{flex:none;width:7px;height:7px;border-radius:50%;background:var(--cc);box-shadow:0 0 0 2px #ffffff40}
+.xv .xl{left:auto;right:10px;top:10px;bottom:auto;padding:.28rem .6rem;border-radius:999px;background:#0000005c;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font-size:.75rem;z-index:2}
+.xv .xtt{left:14px;right:14px;bottom:14px;font-size:.98rem;line-height:1.25;letter-spacing:-.005em;-webkit-line-clamp:3;text-shadow:0 1px 8px #0006}
+.xv.np .xtt{font-size:1.18rem;font-weight:800;-webkit-line-clamp:4}
+.xu{margin-top:10px;gap:8px;font-size:.88rem;font-weight:600}
+.xu .xn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xu .xe{margin-left:auto;display:inline-flex;align-items:center;gap:.3rem;font-weight:500;font-size:.8rem;color:var(--mu)}
 </style>
 </head>
 <body>
@@ -951,7 +976,7 @@ async function doReset(e){e.preventDefault();const p=$("#p").value;if(p.length<8
 function plist(v,max){const t=v.trim().replace(/^@/,"").toLowerCase(),m=me(),l=db.users.filter(u=>!u.banned&&(!t||u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t))).sort((a,b)=>(b.followers||[]).length-(a.followers||[]).length||a.name.localeCompare(b.name)).slice(0,max||60);
 return l.map(u=>{const fo=u.followers||[],on=m&&fo.includes(m.id);return`<div class="pp"><a href="#/profile/${u.id}" class="row" style="flex:1;flex-wrap:nowrap;gap:.7rem;min-width:0">${av(u.id,48)}<span style="min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)} · ${fo.length} follower${fo.length===1?"":"s"}</span>${u.bio?`<span class="meta" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(u.bio)}</span>`:""}</span></a>${m&&m.id===u.id?"":`<button class="sm ${on?"g":""}" onclick="follow('${u.id}')">${on?"Following":"Follow"}</button>`}</div>`}).join("")||`<div class="empty">No one found${t?` for "${esc(v.trim())}"`:""}.</div>`}
 function pfind(v){pq=v;$("#pl").innerHTML=plist(v)}
-const APP_VERSION="5.1.54";
+const APP_VERSION="5.1.55";
 const VB='<svg class="vf" viewBox="0 0 24 24" width="1em" height="1em" role="img" aria-label="Verified"><title>Verified</title><circle cx="12" cy="12" r="10" fill="#20a5f6"/><path d="m7.5 12.3 3 3 6-6.3" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',VA=VB.replace('#20a5f6','var(--ac)'),vb=u=>u?(u.role==="admin"?VA:u.verified?VB:""):"";
 function vlist(v){const t=v.trim().replace(/^@/,"").toLowerCase(),l=db.users.filter(u=>t?(u.name.toLowerCase().includes(t)||u.user.toLowerCase().includes(t)):u.verified).slice(0,12);
 return l.map(u=>`<div class="pp">${av(u.id,40)}<span style="flex:1;min-width:0"><b class="ui">${esc(u.name)}</b>${vb(u)}<span class="meta" style="display:block">@${esc(u.user)}</span></span><button type="button" class="sm ${u.verified?"g":""}" onclick="verify('${u.id}')">${u.verified?"Remove badge":"Verify"}</button></div>`).join("")||`<p class="meta">${t?"No member found.":"No verified members yet. Search for a member above."}</p>`}
@@ -1671,8 +1696,8 @@ new MutationObserver(logoApply).observe(document.documentElement,{attributes:tru
 R.following=function(){fv="fl";return R.home()};
 R.editprofile=epPage;R.findpeople=fpPage;R.terms=()=>legalPage('terms');R.privacy=()=>legalPage('privacy');R.guidelines=()=>legalPage('guidelines');R.editdisc=dcEditPage;R.viewers=vwPage;epIcons();
 R.explore=function(q){const c=q.get("c")||"",A=pub().filter(a=>!c||catsOf(a).includes(c)).map(x=>({k:"article",x})),D=db.discs.filter(d=>!c||catsOf(d).includes(c)).map(x=>({k:"disc",x})),l=[...A,...D].sort((p,r)=>r.x.date.localeCompare(p.x.date)),
-chip=(v,t)=>`<a class="xc ${c===v?"on":""}" href="#/explore${v?"?c="+encodeURIComponent(v):""}">${esc(t)}</a>`;
-return`<div class="xch">${chip("","All")+CATS.map(v=>chip(v,v)).join("")}</div><div class="xg">${l.map((i,n)=>{const x=i.x,uid=i.k==="article"?x.author:x.uid,u=U(uid);return`<a class="xt" href="#/${i.k}/${x.id}"><div class="xv ${n===0?"big":"s"+(n%4)}">${art(x.cat)}${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<div class="xtt">${esc(x.title)}</div><div class="xl">${I("heart",14)} ${kf(x.likes.length)}</div></div><div class="xu">${av(uid,20)}<span>${esc(u.name)}</span>${vb(u)}</div></a>`}).join("")||'<div class="empty">Nothing here yet.</div>'}</div>`};
+chip=(v,t)=>`<a class="xc ${c===v?"on":""}" href="#/explore${v?"?c="+encodeURIComponent(v):""}">${v?`<i style="--cd:${cc(v)[0]}"></i>`:""}${esc(t)}</a>`;
+return`<div class="xch">${chip("","All")+CATS.map(v=>chip(v,v)).join("")}</div><div class="xg">${l.map((i,n)=>{const x=i.x,uid=i.k==="article"?x.author:x.uid,u=U(uid),k=cc(x.cat);return`<a class="xt" href="#/${i.k}/${x.id}" style="--d:${Math.min(n,14)*40}ms"><div class="xv ${n===0?"big":"s"+(n%4)}${x.img?"":" np"}" style="--cc:${k[0]}"><div class="xpo"><i class="xic">${cic(x.cat)}</i></div>${x.img?`<img src="${esc(x.img)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`:""}<span class="xcat"><i></i>${esc(x.cat)}</span><span class="xl">${I("heart",13)} ${kf(x.likes.length)}</span><div class="xtt">${esc(x.title)}</div></div><div class="xu">${av(uid,22)}<span class="xn">${esc(u.name)}</span>${vb(u)}<span class="xe">${I("eye",14)} ${kf(x.views||0)}</span></div></a>`}).join("")||'<div class="empty">Nothing here yet.</div>'}</div>`};
 function gate(){return`<div class="empty"><h2>Please log in</h2><p>You need an account to see this page.</p><a class="btn" href="#/login">Log in</a></div>`}
 let wasHome=0;
 function route(){const [p,qs]=(location.hash||"#/").slice(2).split("?"),[n,id]=p.split("/"),q=new URLSearchParams(qs||"");
